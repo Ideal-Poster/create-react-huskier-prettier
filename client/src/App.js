@@ -5,12 +5,14 @@ import useMouse from "@react-hook/mouse-position";
 import { Motion, spring } from "react-motion";
 
 function App() {
+  const [selected, setSelected] = React.useState(null);
+  const [selectedQueue, setSelectedQueue] = React.useState(null);
+
   const ref = React.useRef(null);
   const mouse = useMouse(ref, {
     enterDelay: 100,
     leaveDelay: 100,
   });
-  const [selected, setSelected] = React.useState(null);
 
   return (
     <div
@@ -27,14 +29,14 @@ function App() {
           defaultStyle={{
             x: 0,
             y: 0,
-            width: 100,
-            offset: 0,
+            width: 0,
+            // offset: 100
           }}
           style={{
             x: mouse.x,
             y: mouse.y,
-            width: spring(0),
-            offset: spring(100),
+            width: spring(100),
+            // offset: spring(0)
           }}
         >
           {(style) => (
@@ -48,18 +50,19 @@ function App() {
               <div
                 className="overlay"
                 style={{
-                  transform: `translateX(-${style.width}%)`,
+                  background: "green",
+                  // transform: `translateX(-${style.width}%)`,
+                  width: `${style.width}%`,
                 }}
               >
                 <div
                   style={{
                     background: "green",
                     position: "relative",
-                    transform: `translateX(-${style.offset}%)`,
+                    // transform: `translateX(-${style.offset}%)`,
                   }}
                 >
                   helloopfonrpfnoepro
-                  {style.scaleX}
                 </div>
               </div>
             </div>
