@@ -64,8 +64,8 @@ function Map(props) {
             key={marker.created_at}
             position={{ lat: marker.lat, lng: marker.lng }}
             // onClick={() => setSelected(marker)}
-            onMouseOver={(marker) => props.setSelected(marker)}
-            onMouseOut={() => props.setSelected(null)}
+            onMouseOver={(marker) => props.selectMarker(marker)}
+            onMouseOut={(marker) => props.deselectMarker(marker)}
           />
         ))}
       </GoogleMap>
