@@ -1,22 +1,12 @@
 import React, { useEffect } from "react";
-import {
-  useLoadScript,
-  GoogleMap,
-  Marker,
-  // InfoWindow,
-} from "@react-google-maps/api";
-// import mapStyles from "./mapStyles";
-// import { formatRelative } from "date-fns";
-import { libraries, mapContainerStyle, center, options } from "./mapConfig";
-// import useMouse from '@react-hook/mouse-position';
+import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 
-import "@reach/combobox/styles.css";
-// import Search from "./Search";
+import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import api from "../../api";
+// import "@reach/combobox/styles.css";
 
 function Map(props) {
   const [markers, setMarkers] = React.useState([]);
-  // const [selected, setSelected] = React.useState(null);
 
   useEffect(() => {
     const fetchMarkers = async () => {
@@ -49,27 +39,23 @@ function Map(props) {
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <div>
-      {/* <Search /> */}
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={13}
-        center={center}
-        options={options}
-        onClick={onMapClick}
-        onLoad={onMapLoad}
-      >
-        {markers.map((marker) => (
-          <Marker
-            key={marker.created_at}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            // onClick={() => setSelected(marker)}
-            onMouseOver={(marker) => props.selectMarker(marker)}
-            onMouseOut={(marker) => props.deselectMarker(marker)}
-          />
-        ))}
-      </GoogleMap>
-    </div>
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      zoom={13}
+      center={center}
+      options={options}
+      onClick={onMapClick}
+      onLoad={onMapLoad}
+    >
+      {markers.map((marker) => (
+        <Marker
+          key={marker.created_at}
+          position={{ lat: marker.lat, lng: marker.lng }}
+          onMouseOver={(marker) => props.selectMarker(marker)}
+          onMouseOut={(marker) => props.deselectMarker(marker)}
+        />
+      ))}
+    </GoogleMap>
   );
 }
 
