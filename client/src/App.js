@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import MapContainer from "./components/map/MapContainer";
 

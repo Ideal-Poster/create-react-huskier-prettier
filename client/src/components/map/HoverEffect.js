@@ -4,29 +4,23 @@ import { motion } from "framer-motion";
 import styles from "./MapContainer.module.css"; // Import css modules stylesheet as styles
 
 function HoverEffect(props) {
-  const { mouse } = props;
-  const [isDisplayed, setIsDisplayed] = React.useState(false);
-
+  const { mouse, marker } = props;
   return (
-    <motion.div
-      className={styles.hover__position}
-      animate={{ x: mouse.x + 25, y: mouse.y - 175 }}
-      transition={{ duration: 0 }}
-    >
+    <div>
       <motion.div
-        className={styles.hover__container}
-        animate={{ width: "100%" }}
-        transition={{ duration: 0.2 }}
+        className={styles.hover__position}
+        animate={{ x: mouse.x + 25, y: mouse.y - 175 }}
+        transition={{ duration: 0 }}
       >
         <motion.div
-          className={styles.hover__content}
-          // animate={{ x: 1 }}
-          // transition={{ duration: 2 }}
+          className={styles.hover__container}
+          animate={{ width: "100%" }}
+          transition={{ duration: 0.2 }}
         >
-          <p>hehehe</p>s
+          <motion.div className={styles.hover__content}>{marker.id}</motion.div>
         </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 

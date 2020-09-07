@@ -3,11 +3,12 @@ import useMouse from "@react-hook/mouse-position";
 
 import styles from "./MapContainer.module.css"; // Import css modules stylesheet as styles
 import Map from "./Map";
+
 import HoverEffect from "./HoverEffect";
 
 function MapContainer(props) {
-  const [selected, setSelected] = React.useState(null);
-  const [selectedQueue, setSelectedQueue] = React.useState([]);
+  const [selectedMarker, setSelectedMarker] = React.useState(null);
+  const [markers, setMarkers] = React.useState([]);
 
   const ref = React.useRef(null);
   const mouse = useMouse(ref, {
@@ -15,25 +16,24 @@ function MapContainer(props) {
     leaveDelay: 100,
   });
 
-  const filterMarkers = (state, marker) => {
-    return state.filter((currentMarker) => currentMarker.pixel != marker.pixel);
-  };
-
   const selectMarker = (marker) => {
-    setSelectedQueue((current) => [...current, marker]);
-    setSelected(marker);
+    setSelectedMarker(marker);
   };
 
   const deselectMarker = (marker) => {
-    setSelectedQueue((current) => filterMarkers(current, marker));
+    setSelectedMarker(null);
   };
 
   return (
     <div className={styles.container} ref={ref}>
-      {selectedQueue.map(() => (
-        <HoverEffect mouse={mouse} />
-      ))}
-      <Map selectMarker={selectMarker} deselectMarker={deselectMarker} />
+      {selectedMarker && <HoverEffect mouse={mouse} marker={selectedMarker} />}
+
+      <Map
+        markers={markers}
+        setMarkers={setMarkers}
+        selectMarker={selectMarker}
+        deselectMarker={deselectMarker}
+      />
     </div>
   );
 }

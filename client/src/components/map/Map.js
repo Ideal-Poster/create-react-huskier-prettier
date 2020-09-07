@@ -3,11 +3,9 @@ import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import api from "../../api";
-// import "@reach/combobox/styles.css";
 
 function Map(props) {
-  const [markers, setMarkers] = React.useState([]);
-
+  const { markers, setMarkers } = props;
   useEffect(() => {
     const fetchMarkers = async () => {
       const res = (await api.get("/locations")).data;
@@ -38,6 +36,7 @@ function Map(props) {
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
 
+  // console.log(markers);
   return (
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
@@ -47,14 +46,17 @@ function Map(props) {
       onClick={onMapClick}
       onLoad={onMapLoad}
     >
-      {markers.map((marker) => (
-        <Marker
-          key={marker.created_at}
-          position={{ lat: marker.lat, lng: marker.lng }}
-          onMouseOver={(marker) => props.selectMarker(marker)}
-          onMouseOut={(marker) => props.deselectMarker(marker)}
-        />
-      ))}
+      {markers.map((marker) => {
+        // console.log(marker);
+        return (
+          <Marker
+            key={marker.created_at}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            onMouseOver={() => props.selectMarker(marker)}
+            onMouseOut={() => props.deselectMarker(marker)}
+          />
+        );
+      })}
     </GoogleMap>
   );
 }
