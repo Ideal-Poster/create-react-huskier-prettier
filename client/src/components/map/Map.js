@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
-import api from "../../api";
+import api from "../../requests";
 
 function Map(props) {
   const { markers, setMarkers } = props;
@@ -36,7 +36,6 @@ function Map(props) {
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
 
-  // console.log(markers);
   return (
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
@@ -47,7 +46,6 @@ function Map(props) {
       onLoad={onMapLoad}
     >
       {markers.map((marker) => {
-        // console.log(marker);
         return (
           <Marker
             key={marker.created_at}

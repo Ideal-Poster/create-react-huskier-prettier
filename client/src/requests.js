@@ -8,4 +8,8 @@ const api = axios.create({
   // }
 });
 
+export const postUser = ({ name, password }) => {
+  api.get({ name, password }).then(console.log);
+};
+
 export default api;
