@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import { login } from "../../requests";
 
 const initialFormState = {
   username: "",
@@ -20,10 +21,14 @@ function Auth() {
     });
   };
 
+  const onSubmit = async () => {
+    // console.log(form.username);
+    login(form);
+  };
+
   return (
     <Row>
       <Col md={{ span: 4, offset: 4 }}>
-        <p>Login</p>
         <Form.Group>
           {Object.keys(form).map((formName) => (
             <Row>
@@ -37,7 +42,7 @@ function Auth() {
             </Row>
           ))}
           <Row>
-            <Button>Submit</Button>
+            <Button onClick={onSubmit}>Submit</Button>
           </Row>
         </Form.Group>
       </Col>

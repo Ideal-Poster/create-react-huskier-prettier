@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import MapContainer from "./components/map/MapContainer";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Auth from "./pages/Auth";
-import SignUp from "./pages/SignUp";
+import Auth from "./components/auth/LogIn";
+import SignUp from "./components/auth/SignUp";
+import { autoLogin } from "./requests";
 
 function App() {
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    autoLogin();
+  }, []);
   return (
     <Router>
       <Switch>

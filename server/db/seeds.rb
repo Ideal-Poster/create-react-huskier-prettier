@@ -6,9 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
-bob =  User.create(name: 'bob')
-cheese = User.create(name: 'cheese')
+bob =  User.create(username: 'bob')
+cheese = User.create(username: 'cheese')
 
 chinese = Language.create(name: "Manderine")
 spanish = Language.create(name: "Spanish")

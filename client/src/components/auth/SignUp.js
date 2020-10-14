@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import { signUp } from "../../requests";
 
 const initialFormState = {
   username: "",
@@ -95,10 +96,15 @@ function SignUp() {
     </ul>
   );
 
+  const onSubmit = () => {
+    // if (condition) {
+    signUp(form);
+    // }
+  };
+
   return (
     <Row>
       <Col md={{ span: 4, offset: 4 }}>
-        <p>Login</p>
         {validationItems()}
         <Form.Group>
           {Object.keys(form).map((formName) => (
@@ -113,7 +119,7 @@ function SignUp() {
             </Row>
           ))}
           <Row>
-            <Button>Submit</Button>
+            <Button onClick={onSubmit}>Submit</Button>
           </Row>
         </Form.Group>
       </Col>
