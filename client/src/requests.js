@@ -27,7 +27,7 @@ export const login = async ({ username, password }) => {
     if (res.data.errors) {
       alert(res.data.errors);
     } else {
-      console.log(res);
+      return res;
     }
   } catch (error) {
     console.log(error);
@@ -36,18 +36,18 @@ export const login = async ({ username, password }) => {
 
 export const autoLogin = async () => {
   const userId = localStorage.user_id;
-  // if (userId) {
-  try {
-    const res = await api.get("/auto_login");
-    if (res.data.errors) {
-      alert(res.data.errors);
-    } else {
-      console.log(res);
+  if (userId) {
+    try {
+      const res = await api.get("/auto_login");
+      if (res.data.errors) {
+        alert(res.data.errors);
+      } else {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
-  // }
 };
 
 export default api;

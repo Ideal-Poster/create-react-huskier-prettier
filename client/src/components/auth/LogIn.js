@@ -22,8 +22,10 @@ function Auth() {
   };
 
   const onSubmit = async () => {
-    // console.log(form.username);
-    login(form);
+    const res = await login(form);
+    if (res) {
+      localStorage.setItem("token", res.data.token);
+    }
   };
 
   return (
