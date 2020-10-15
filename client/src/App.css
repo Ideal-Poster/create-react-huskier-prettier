@@ -1,0 +1,23 @@
+li {
+  list-style-type: none;
+}
+
+.check {
+  stroke-dasharray: 45;
+  stroke-dashoffset: 45;
+  animation: check 0.2s 0.1s ease-in-out forwards;
+}
+
+@keyframes check {
+  0% {
+    stroke-dashoffset: 45;
+  }
+  100% {
+    stroke-dashoffset: 20;
+  }
+}
+
+.validation-icon {
+  margin-left: -10px;
+  margin-right: 10px;
+}

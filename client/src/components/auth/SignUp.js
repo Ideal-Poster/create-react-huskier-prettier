@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import { Checkmark } from "react-checkmark";
+
 import { signUp } from "../../requests";
 import styles from "./Auth.module.css";
 
@@ -17,7 +19,6 @@ const validationObj = {
   uppercase: false,
   number: false,
   minChar: false,
-  // passwordMatch: false
 };
 
 const validationNames = [
@@ -25,7 +26,6 @@ const validationNames = [
   { id: "uppercase", name: "Upper-case" },
   { id: "number", name: "Number" },
   { id: "minChar", name: "More than 8 characters" },
-  // { id: "passwordMatch", name: "Passwords match" },
 ];
 
 const validationReducer = (state, action) => {
@@ -38,8 +38,7 @@ const validationReducer = (state, action) => {
       return { ...state, number: action.payload };
     case "minChar":
       return { ...state, minChar: action.payload };
-    // case "passwordMatch":
-    //   return { ...state, passwordMatch: action.payload };
+
     default:
       return state;
   }
@@ -61,7 +60,6 @@ function SignUp() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(doPasswordsMatch());
 
     if (e.target.name === "password") validate(value);
     setForm((current) => {
@@ -75,7 +73,6 @@ function SignUp() {
     const checkLowerCase = /[a-z|ç|ş|ö|ü|ı|ğ]/u.test(value);
     const checkUpperCase = /[A-Z|Ç|Ş|Ö|Ü|İ|Ğ]/u.test(value);
     const checkNumber = /[0-9]/.test(value);
-    // const passwordMatch = form.password === form.passwordConfirmation;
 
     if (checkLength) {
       dispatch({ type: "minChar", payload: true });
@@ -104,16 +101,53 @@ function SignUp() {
     return checkLength && checkUpperCase && checkLowerCase && checkNumber;
   };
 
+  const ValidationIcon = ({ isDone }) => {
+    return isDone ? (
+      <svg
+        class="validation-icon"
+        width="14"
+        height="12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polyline
+          className="check"
+          points="1,7 5,11 13,1"
+          fill="none"
+          stroke="#FFFFFF"
+          strokeWidth="2px"
+          strokeLinecap="round"
+        />
+      </svg>
+    ) : (
+      <svg
+        class="validation-icon"
+        width="12"
+        height="12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M12 6A6 6 0 110 6a6 6 0 0112 0z" fill="black" />
+      </svg>
+    );
+  };
+
   const validationItems = () => (
     <div className={styles.validation__box}>
       <ul className={styles.validation__list}>
         {validationNames.map((item) => (
           <li style={state[item.id] ? { color: "grey" } : { color: "black" }}>
-            {item.name}
+            <span className="validation-icon">
+              <ValidationIcon isDone={state[item.id]} />
+              {item.name}
+            </span>
           </li>
         ))}
         <li style={passwordMatch ? { color: "grey" } : { color: "black" }}>
-          Passwords match
+          <span className="validation-icon">
+            <ValidationIcon isDone={passwordMatch} />
+            Passwords match
+          </span>
         </li>
       </ul>
     </div>

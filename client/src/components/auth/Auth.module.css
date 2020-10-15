@@ -40,3 +40,16 @@
   margin-top: 15px;
   text-align: center;
 }
+
+.submit__button:hover {
+  background: rgb(29, 29, 29);
+}
+
+.validation-icon {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  left: 0px;
+}
