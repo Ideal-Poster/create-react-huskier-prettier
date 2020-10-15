@@ -119,17 +119,7 @@ function SignUp() {
           strokeLinecap="round"
         />
       </svg>
-    ) : (
-      <svg
-        class="validation-icon"
-        width="12"
-        height="12"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M12 6A6 6 0 110 6a6 6 0 0112 0z" fill="black" />
-      </svg>
-    );
+    ) : null;
   };
 
   const validationItems = () => (
