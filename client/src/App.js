@@ -12,7 +12,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    autoLogin();
+    autoLogin().then(console.log);
   }, []);
 
   return (

@@ -39,6 +39,7 @@
   width: 100%;
   margin-top: 15px;
   text-align: center;
+  border: none;
 }
 
 .submit__button:hover {
@@ -52,4 +53,9 @@
   display: flex;
   align-items: center;
   left: 0px;
+}
+
+.submit__button[disabled="disabled"],
+.submit__button:disabled {
+  background: rgb(29, 29, 29);
 }

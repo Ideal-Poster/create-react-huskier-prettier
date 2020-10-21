@@ -17,7 +17,6 @@ function MapContainer(props) {
   });
 
   const selectMarker = (marker) => {
-    console.log(marker);
     setSelectedMarker(marker);
   };
 
