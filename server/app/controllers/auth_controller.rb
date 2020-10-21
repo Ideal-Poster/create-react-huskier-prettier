@@ -11,7 +11,6 @@ class AuthController < ApplicationController
   end
 
   def auto_login
-    # byebug
     user = User.find_by(id: get_auth_header)
 
     if session_user
@@ -20,6 +19,4 @@ class AuthController < ApplicationController
       render json: {error: "user not available"}
     end
   end
-
-
 end

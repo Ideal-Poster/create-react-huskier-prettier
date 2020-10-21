@@ -4,4 +4,6 @@ class LocationsController < ApplicationController
     locations = Location.all
     render json: locations
   end
+
+  
 end
