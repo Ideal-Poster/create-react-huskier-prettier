@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_162717) do
+ActiveRecord::Schema.define(version: 2020_10_23_135729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "invitations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "friend_id"
+    t.boolean "confirmed", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_invitations_on_user_id"
+  end
 
   create_table "language_locations", force: :cascade do |t|
     t.bigint "language_id", null: false
@@ -65,6 +74,7 @@ ActiveRecord::Schema.define(version: 2020_08_11_162717) do
     t.index ["user_id"], name: "index_visits_on_user_id"
   end
 
+  add_foreign_key "invitations", "users"
   add_foreign_key "language_locations", "languages"
   add_foreign_key "language_locations", "locations"
   add_foreign_key "user_languages", "languages"
