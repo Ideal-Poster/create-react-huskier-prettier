@@ -49,6 +49,7 @@ const validationReducer = (state, action) => {
 function SignUp(props) {
   const [form, setForm] = useState(initialFormState);
   const [passwordMatch, setpasswordMatch] = useState(false);
+  const [errors, setErrors] = useState(false);
   const [state, dispatch] = React.useReducer(validationReducer, validationObj);
 
   useEffect(() => {
@@ -171,20 +172,19 @@ function SignUp(props) {
     e.preventDefault();
     if (validate(form.password)) {
       const res = await signUp(form);
-      res.errors ? alert(res.errors) : acceptLogin(res);
+      res.errors ? setErrors(res.errors) : acceptLogin(res);
     }
   };
 
   const acceptLogin = (res) => {
-    // console.log(res);
-    localStorage.setItem("user", res.user);
     localStorage.setItem("token", res.token);
     props.history.push("/");
   };
 
   return (
     <div className={styles.background}>
-      <Row className={styles.sign__up}>
+      <div className={styles.validation__box}>{errors}</div>
+      <Row className={styles.form__container}>
         <Col md={{ span: 4, offset: 4 }} style={{ padding: "0px" }}>
           <ValidationItems />
           <Form.Group className={styles.form__group}>

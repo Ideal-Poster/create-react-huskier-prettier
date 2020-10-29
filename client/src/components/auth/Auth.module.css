@@ -20,7 +20,7 @@
   margin: 0;
 }
 
-.sign__up {
+.form__container {
   transform: translateY(-50%);
   position: relative;
   top: 50vh;

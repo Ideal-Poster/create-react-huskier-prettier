@@ -12,8 +12,10 @@ export const signUp = async ({ username, password }) => {
   try {
     const res = await api.post("/signup", { user: { username, password } });
     if (res.data.errors) {
+      console.log(res);
       return res.data;
     } else {
+      console.log(res);
       return res.data;
     }
   } catch (error) {
@@ -25,9 +27,9 @@ export const login = async ({ username, password }) => {
   try {
     const res = await api.post("/login", { user: { username, password } });
     if (res.data.errors) {
-      alert(res.data.errors);
+      return res.data;
     } else {
-      return res;
+      return res.data;
     }
   } catch (error) {
     console.log(error);
