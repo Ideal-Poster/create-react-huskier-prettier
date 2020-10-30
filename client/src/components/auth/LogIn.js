@@ -3,7 +3,9 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+
 import { login } from "../../requests";
+import styles from "./Auth.module.css";
 
 const initialFormState = {
   username: "",
@@ -23,34 +25,39 @@ function Auth(props) {
 
   const onSubmit = async () => {
     const res = await login(form);
-    console.log(res.data);
+
     if (!res.errors) {
-      localStorage.setItem("user", res.data.user);
       localStorage.setItem("token", res.data.token);
+      props.history.push("/");
     }
   };
 
   return (
-    <Row>
-      <Col md={{ span: 4, offset: 4 }}>
-        <Form.Group>
-          {Object.keys(form).map((formName) => (
-            <Row key={formName}>
-              <Form.Control
-                type="text"
-                name={formName}
-                placeholder={formName}
-                value={form[formName]}
-                onChange={handleChange}
-              />
+    <div className={styles.background}>
+      <Row className={styles.form__container}>
+        <Col md={{ span: 4, offset: 4 }}>
+          <Form.Group className={styles.form__group}>
+            {Object.keys(form).map((formName) => (
+              <Row>
+                <Form.Control
+                  type={formName === "password" ? "password" : "text"}
+                  name={formName}
+                  placeholder={formName}
+                  value={form[formName]}
+                  onChange={handleChange}
+                  className={styles.form}
+                />
+              </Row>
+            ))}
+            <Row>
+              <Button className={styles.submit__button} onClick={onSubmit}>
+                Submit
+              </Button>
             </Row>
-          ))}
-          <Row>
-            <Button onClick={onSubmit}>Submit</Button>
-          </Row>
-        </Form.Group>
-      </Col>
-    </Row>
+          </Form.Group>
+        </Col>
+      </Row>
+    </div>
   );
 }
 
