@@ -28,6 +28,3 @@ location_4 = Location.create(name: "store3", lat: 40.745017275752154, lng: -73.9
 
 LanguageLocation.create(language: chinese, location: location_1)
 LanguageLocation.create(language: chinese, location: location_2)
-
-
-

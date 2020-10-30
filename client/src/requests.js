@@ -43,7 +43,6 @@ export const autoLogin = async () => {
         alert(res.data.errors);
         return res;
       } else {
-        console.log(res);
         return res;
       }
     } catch (error) {

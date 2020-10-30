@@ -52,6 +52,17 @@ function SignUp(props) {
   const [state, dispatch] = React.useReducer(validationReducer, validationObj);
 
   useEffect(() => {
+    const doPasswordsMatch = () => {
+      return form.password === form.passwordConfirmation;
+    };
+    const updatePasswordMatchState = () => {
+      // passwords match and are not black
+      if (doPasswordsMatch() && form.password.length > 0) {
+        setpasswordMatch(true);
+      } else {
+        setpasswordMatch(false);
+      }
+    };
     updatePasswordMatchState();
   }, [form]);
 
@@ -64,15 +75,6 @@ function SignUp(props) {
       const updatedState = { ...current, [name]: value };
       return updatedState;
     });
-  };
-
-  const updatePasswordMatchState = () => {
-    // passwords match and are not black
-    if (doPasswordsMatch() && form.password.length > 0) {
-      setpasswordMatch(true);
-    } else {
-      setpasswordMatch(false);
-    }
   };
 
   const validate = (value) => {
@@ -162,10 +164,6 @@ function SignUp(props) {
       </ul>
     </div>
   );
-
-  const doPasswordsMatch = () => {
-    return form.password === form.passwordConfirmation;
-  };
 
   const onSubmit = async (e) => {
     e.preventDefault();

@@ -23,6 +23,8 @@ class User < ApplicationRecord
   end
 
   def send_invitation(user)
-    invitations.create(friend_id: user.id)
+    # if !Invitation.where(user_id: id, friend_id: user.id)
+      invitations.create(friend_id: user.id)
+    # end
   end
 end

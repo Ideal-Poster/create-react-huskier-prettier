@@ -6,11 +6,13 @@ import api from "../../requests";
 
 function Map(props) {
   const { markers, setMarkers } = props;
+
   useEffect(() => {
     const fetchMarkers = async () => {
       const res = (await api.get("/locations")).data;
       setMarkers(res);
     };
+
     fetchMarkers();
   }, []);
 

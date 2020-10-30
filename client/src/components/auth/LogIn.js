@@ -10,7 +10,7 @@ const initialFormState = {
   password: "",
 };
 
-function Auth() {
+function Auth(props) {
   const [form, setForm] = useState(initialFormState);
 
   const handleChange = (e) => {
@@ -23,7 +23,9 @@ function Auth() {
 
   const onSubmit = async () => {
     const res = await login(form);
-    if (res) {
+    console.log(res.data);
+    if (!res.errors) {
+      localStorage.setItem("user", res.data.user);
       localStorage.setItem("token", res.data.token);
     }
   };
@@ -33,7 +35,7 @@ function Auth() {
       <Col md={{ span: 4, offset: 4 }}>
         <Form.Group>
           {Object.keys(form).map((formName) => (
-            <Row>
+            <Row key={formName}>
               <Form.Control
                 type="text"
                 name={formName}
