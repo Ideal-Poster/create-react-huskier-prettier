@@ -38,7 +38,7 @@ function Auth(props) {
         <Col md={{ span: 4, offset: 4 }}>
           <Form.Group className={styles.form__group}>
             {Object.keys(form).map((formName) => (
-              <Row>
+              <Row key={formName}>
                 <Form.Control
                   type={formName === "password" ? "password" : "text"}
                   name={formName}
