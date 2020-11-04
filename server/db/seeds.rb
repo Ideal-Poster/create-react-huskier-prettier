@@ -5,12 +5,29 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
 
-bob =  User.create(username: 'bob')
-cheese = User.create(username: 'cheese')
+# bob =  User.create(username: 'bob')
+# cheese = User.create(username: 'cheese')
+
+# create user
+10.times do
+  User.create(username: Faker::Name.unique.name, password: '1Qqqqqqq')
+end
+
+User.first.send_invitation(User.all[1])
+User.first.send_invitation(User.all[2])
+User.first.send_invitation(User.all[3])
+User.first.send_invitation(User.all[4])
+User.first.send_invitation(User.all[5])
 
 chinese = Language.create(name: "Manderine")
 spanish = Language.create(name: "Spanish")
+tagalog = Language.create(name: "Tagalog")
+urdu = Language.create(name: "Urdu")
+japanese = Language.create(name: "Japanese")
+
+languages = [chinese, spanish, tagalog, urdu, japanese]
 
 chinese_locations = [
   {lat: 40.72448553795292, lng: -73.99979419042967 },
@@ -20,11 +37,17 @@ chinese_locations = [
   {lat: 40.754250496596796, lng: -73.9727086773662 }
 ]
 
-location_1 = Location.create(name: "store", lat: 40.72448553795292, lng: -73.99979419042967)
-location_2 = Location.create(name: "store1", lat: 40.734482035662616, lng: -73.9840383282451)
-location_3 = Location.create(name: "store2", lat: 40.74592765026943, lng: -73.99450967223925)
-location_4 = Location.create(name: "store3", lat: 40.745017275752154, lng: -73.97665688903612)
-# Location.create(name: "store4", lat: chinese_locations[4][:lat], lng: chinese_locations[4][:lng])
+40.times do 
+  location = Location.create(
+    name: Faker::Company.name,
+    lat: Random.new.rand(40.72148553795292..40.757970496596796),
+    lng: (Random.new.rand(73.9317086773662..73.99999419042967) * -1)
+  )
+  LanguageLocation.create(language: languages.sample, location: location)
+  LanguageLocation.create(language: languages.sample, location: location)
+end
 
-LanguageLocation.create(language: chinese, location: location_1)
-LanguageLocation.create(language: chinese, location: location_2)
+
+40.times do 
+  Visit.create(user: User.all.sample, location: Location.all.sample)
+end

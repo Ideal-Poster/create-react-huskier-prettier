@@ -27,4 +27,6 @@ class User < ApplicationRecord
       invitations.create(friend_id: user.id)
     # end
   end
+
+  
 end

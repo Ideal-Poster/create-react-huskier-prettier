@@ -2,17 +2,16 @@ import React, { useEffect } from "react";
 import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
-import api from "../../requests";
-
+import { getLocations } from "../../requests";
+import MarkerLogic from "./MarkerLogic";
 function Map(props) {
   const { markers, setMarkers } = props;
 
   useEffect(() => {
     const fetchMarkers = async () => {
-      const res = (await api.get("/locations")).data;
+      const res = (await getLocations()).data;
       setMarkers(res);
     };
-
     fetchMarkers();
   }, []);
 
@@ -49,12 +48,19 @@ function Map(props) {
     >
       {markers.map((marker) => {
         return (
-          <Marker
-            key={marker.created_at}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onMouseOver={() => props.selectMarker(marker)}
-            onMouseOut={() => props.deselectMarker(marker)}
-          />
+          // <Marker
+          //   icon={{
+          //     url: 'Asset-3.svg',
+          //     scaledSize: new window.google.maps.Size(40, 40)
+          //   }}
+          //   key={marker.id}
+          //   position={{ lat: marker.lat, lng: marker.lng }}
+          //   onMouseOver={() => props.selectMarker(marker)}
+          //   onMouseOut={() => props.deselectMarker(marker)}
+          // />
+          // <div key={marker.id}>
+          <MarkerLogic props={props} marker={marker} />
+          // </div>
         );
       })}
     </GoogleMap>
