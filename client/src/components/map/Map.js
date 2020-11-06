@@ -7,6 +7,7 @@ import MarkerLogic from "./MarkerLogic";
 
 function Map(props) {
   const { markers, setMarkers, panTo, mapRef } = props;
+
   useEffect(() => {
     const fetchMarkers = async () => {
       const res = await getLocations();

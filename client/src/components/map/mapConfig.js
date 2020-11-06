@@ -2,7 +2,7 @@ import mapStyles from "./mapStyles";
 
 export const libraries = ["places"];
 export const mapContainerStyle = {
-  width: "60vw",
+  width: "100%",
   height: "100vh",
   float: "right",
 };
