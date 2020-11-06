@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || "http://localhost:3000",
-  timeout: 5000,
+  timeout: 10000,
   headers: {
     Authorization: localStorage.token || "",
   },
@@ -62,7 +62,6 @@ export const autoLogin = async () => {
 export const getLocations = async () => {
   try {
     const res = await api.get("/friends/locations");
-    console.log(res.data);
     if (res.data.errors) {
       return res;
     } else {

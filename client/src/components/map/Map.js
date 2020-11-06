@@ -4,13 +4,13 @@ import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import { getLocations } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
-function Map(props) {
-  const { markers, setMarkers } = props;
 
+function Map(props) {
+  const { markers, setMarkers, panTo, mapRef } = props;
   useEffect(() => {
     const fetchMarkers = async () => {
-      const res = (await getLocations()).data;
-      setMarkers(res);
+      const res = await getLocations();
+      setMarkers(res.data);
     };
     fetchMarkers();
   }, []);
@@ -26,13 +26,17 @@ function Map(props) {
     ]);
   }, []);
 
-  const mapRef = React.useRef();
+  // const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => (mapRef.current = map), []);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+
+  // const panTo = React.useCallback(({lat, lng}) => {
+  //   mapRef.current.panTo({lat, lng});
+  // });
 
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
@@ -46,23 +50,9 @@ function Map(props) {
       onClick={onMapClick}
       onLoad={onMapLoad}
     >
-      {markers.map((marker) => {
-        return (
-          // <Marker
-          //   icon={{
-          //     url: 'Asset-3.svg',
-          //     scaledSize: new window.google.maps.Size(40, 40)
-          //   }}
-          //   key={marker.id}
-          //   position={{ lat: marker.lat, lng: marker.lng }}
-          //   onMouseOver={() => props.selectMarker(marker)}
-          //   onMouseOut={() => props.deselectMarker(marker)}
-          // />
-          // <div key={marker.id}>
-          <MarkerLogic props={props} marker={marker} />
-          // </div>
-        );
-      })}
+      {markers.map((marker) => (
+        <MarkerLogic props={props} marker={marker} />
+      ))}
     </GoogleMap>
   );
 }

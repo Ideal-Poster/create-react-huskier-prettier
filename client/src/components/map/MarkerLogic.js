@@ -6,16 +6,16 @@ function MarkerLogic(_props) {
   const { props, marker } = _props;
 
   const displayMarker = () => {
-    if (!marker["my_location?"] && !hover) {
+    if (marker["my_location?"] && !hover) {
       return "Asset-3.svg";
     }
-    if (!marker["my_location?"] && hover) {
+    if (marker["my_location?"] && hover) {
       return "Asset-5.svg";
     }
-    if (marker["my_location?"] && !hover) {
+    if (!marker["my_location?"] && !hover) {
       return "Asset-12.svg";
     }
-    if (marker["my_location?"] && hover) {
+    if (!marker["my_location?"] && hover) {
       return "Asset-5.svg";
     }
   };

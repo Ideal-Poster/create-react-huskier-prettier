@@ -2,8 +2,9 @@ import mapStyles from "./mapStyles";
 
 export const libraries = ["places"];
 export const mapContainerStyle = {
-  width: "100vw",
+  width: "60vw",
   height: "100vh",
+  float: "right",
 };
 export const center = {
   lat: 40.712776,
