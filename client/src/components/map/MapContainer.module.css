@@ -2,6 +2,7 @@
   height: 100vh;
   width: 100vw;
   position: relative;
+  background: black;
 }
 
 .hover__position {
@@ -10,25 +11,16 @@
   width: 200px;
   height: 150px;
   z-index: 1000;
-  /* left: -100%; */
-  /* width: 0; */
-  /* background: purple; */
 }
 
 .hover__container {
-  /* width: 0; */
   width: 0;
   height: 100%;
   background: green;
 }
 
 .hover__content {
-  /* overflow: hidden; */
   position: absolute;
   width: 100%;
   height: 100%;
-  /* right: 0; */
-  /* transform-origin: left 0% 0px; */
-  /* transform: translateX(50%); */
-  /* background: rosybrown; */
 }

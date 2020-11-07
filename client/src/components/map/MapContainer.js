@@ -51,7 +51,6 @@ function MapContainer(props) {
         className="map__div"
         variants={containerAnimation}
         initial="hidden"
-        // whileHover="show"
         animate={isSidebarOpen ? "show" : "hidden"}
       >
         <Map

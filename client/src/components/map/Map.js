@@ -6,7 +6,7 @@ import { getLocations } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
 
 function Map(props) {
-  const { markers, setMarkers, panTo, mapRef } = props;
+  const { markers, setMarkers, mapRef } = props;
 
   useEffect(() => {
     const fetchMarkers = async () => {
@@ -27,17 +27,12 @@ function Map(props) {
     ]);
   }, []);
 
-  // const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => (mapRef.current = map), []);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-
-  // const panTo = React.useCallback(({lat, lng}) => {
-  //   mapRef.current.panTo({lat, lng});
-  // });
 
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
