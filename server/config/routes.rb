@@ -12,6 +12,5 @@ Rails.application.routes.draw do
 
   get "/auto_login", to: "auth#auto_login"
   get "/friends/locations", to: "locations#friends"
-
-
+  get "/dashboard", to: "users#dashboard"
 end

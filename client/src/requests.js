@@ -8,14 +8,6 @@ const api = axios.create({
   },
 });
 
-const handleResponse = (res) => {
-  if (res.data.errors) {
-    return res.data;
-  } else {
-    return res.data;
-  }
-};
-
 export const signUp = async ({ username, password }) => {
   try {
     const res = await api.post("/signup", { user: { username, password } });
@@ -62,6 +54,19 @@ export const autoLogin = async () => {
 export const getLocations = async () => {
   try {
     const res = await api.get("/friends/locations");
+    if (res.data.errors) {
+      return res;
+    } else {
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getDashboard = async () => {
+  try {
+    const res = await api.get("/dashboard");
     if (res.data.errors) {
       return res;
     } else {

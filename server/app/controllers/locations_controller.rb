@@ -1,8 +1,8 @@
 class LocationsController < ApplicationController
-  def index
-    locations = Location.all
-    render json: locations, include: {users: {only: :username}}
-  end
+  # def index
+  #   locations = Location.all
+  #   render json: locations, include: {users: {only: :username}}
+  # end
 
   def friends
     friends_locations = User.first.friends.collect do |user|

@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import "./Sidebar.css";
+import { getDashboard } from "../../requests";
 
 function Sidebar(props) {
-  const { markers, panTo, isSidebarOpen, setIsSidebarOpen } = props;
+  const { isSidebarOpen, setIsSidebarOpen } = props;
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const fetchInfo = async () => {
+      const res = await getDashboard();
+      setUser(res.data);
+    };
+    fetchInfo();
+  }, []);
 
   return (
     <div>
@@ -12,19 +21,43 @@ function Sidebar(props) {
         id="sidebar"
         variants={sidebarAnimation}
         initial="hidden"
-        // onMouseOver={() => setIsSidebarOpen(true)}
-        // onMouseOut={() => setIsSidebarOpen(false)}
         animate={isSidebarOpen ? "show" : "hidden"}
       >
-        {markers.map((marker) => (
-          <div
-            key={marker.id}
-            onMouseOver={() => panTo(marker)}
-            className="sidebar__marker"
-          >
-            <div className="sidebar__marker__container">hello</div>
+        {user && (
+          <div>
+            <div>
+              <h1>{user.username}</h1>
+              <ul>
+                <li>visits {user.visits.length}</li>
+                <li>
+                  last visit:{" "}
+                  {user.visits.sort((a, b) => b.id - a.id)[0].location.name}
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h1>Languages</h1>
+              <ul>
+                {user.languages.map((language) => (
+                  <li key={`language-${language.name}`}>{language.name}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h1>Friends</h1>
+              <ul>
+                {user.friends.map((friend) => (
+                  <li key={`username-${friend.username}`}>
+                    {" "}
+                    {friend.username}{" "}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        ))}
+        )}
       </motion.div>
       <motion.div
         id="sidebar__button"

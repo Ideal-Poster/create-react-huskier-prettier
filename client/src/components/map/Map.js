@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
-import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
+import { useLoadScript, GoogleMap } from "@react-google-maps/api";
 
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import { getLocations } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
 
 function Map(props) {
-  const { markers, setMarkers, mapRef } = props;
-
+  const { markers, setMarkers, mapRef, selectedMarker } = props;
   useEffect(() => {
     const fetchMarkers = async () => {
       const res = await getLocations();
@@ -47,7 +46,11 @@ function Map(props) {
       onLoad={onMapLoad}
     >
       {markers.map((marker) => (
-        <MarkerLogic props={props} marker={marker} />
+        <MarkerLogic
+          props={props}
+          marker={marker}
+          selectedMarker={selectedMarker}
+        />
       ))}
     </GoogleMap>
   );

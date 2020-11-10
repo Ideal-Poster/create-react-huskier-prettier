@@ -10,16 +10,7 @@ require 'faker'
 # bob =  User.create(username: 'bob')
 # cheese = User.create(username: 'cheese')
 
-# create user
-10.times do
-  User.create(username: Faker::Name.unique.name, password: '1Qqqqqqq')
-end
 
-User.first.send_invitation(User.all[1])
-User.first.send_invitation(User.all[2])
-User.first.send_invitation(User.all[3])
-User.first.send_invitation(User.all[4])
-User.first.send_invitation(User.all[5])
 
 chinese = Language.create(name: "Manderine")
 spanish = Language.create(name: "Spanish")
@@ -28,6 +19,33 @@ urdu = Language.create(name: "Urdu")
 japanese = Language.create(name: "Japanese")
 
 languages = [chinese, spanish, tagalog, urdu, japanese]
+
+# create user
+
+user = User.create(username: Faker::Name.unique.name, password: '1Qqqqqqq', native_language: Language.find_by(name: "English"))
+UserLanguage.create(user: user, language: Language.all[0])
+UserLanguage.create(user: user, language: Language.all[1])
+UserLanguage.create(user: user, language: Language.all[2])
+
+
+10.times do
+  user = User.create(username: Faker::Name.unique.name, password: '1Qqqqqqq', native_language: Language.all.sample)
+  UserLanguage.create(user: user, language: Language.all.sample)
+end
+
+# User.first.send_invitation(User.all[1])
+# User.first.send_invitation(User.all[2])
+# User.first.send_invitation(User.all[3])
+# User.first.send_invitation(User.all[4])
+# User.first.send_invitation(User.all[5])
+
+5.times do |num|
+  user = User.find_by(id: num)
+  User.first.send_invitation(User.all[num])
+  User.all[num].pending_invitations[0].update(confirmed: true)
+end
+
+
 
 chinese_locations = [
   {lat: 40.72448553795292, lng: -73.99979419042967 },
@@ -43,10 +61,9 @@ chinese_locations = [
     lat: Random.new.rand(40.72148553795292..40.757970496596796),
     lng: (Random.new.rand(73.9317086773662..73.99999419042967) * -1)
   )
-  LanguageLocation.create(language: languages.sample, location: location)
-  LanguageLocation.create(language: languages.sample, location: location)
+  LanguageLocation.create(language: Language.all.sample, location: location)
+  LanguageLocation.create(language: Language.all.sample, location: location)
 end
-
 
 40.times do 
   Visit.create(user: User.all.sample, location: Location.all.sample)

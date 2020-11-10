@@ -8,10 +8,10 @@ import HoverEffect from "./HoverEffect";
 import Sidebar from "./Sidebar";
 import { motion } from "framer-motion";
 
-function MapContainer(props) {
+function MapContainer() {
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
   const [width, setWidth] = useState("100vw");
 
   const ref = React.useRef(null);
@@ -29,7 +29,7 @@ function MapContainer(props) {
     setSelectedMarker(marker);
   };
 
-  const deselectMarker = (marker) => {
+  const deselectMarker = () => {
     setSelectedMarker(null);
   };
 
@@ -44,8 +44,6 @@ function MapContainer(props) {
       <Sidebar
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
-        markers={markers}
-        panTo={panTo}
       />
       <motion.div
         className="map__div"
@@ -60,6 +58,7 @@ function MapContainer(props) {
           markers={markers}
           setMarkers={setMarkers}
           selectMarker={selectMarker}
+          selectedMarker={selectedMarker}
           deselectMarker={deselectMarker}
         />
       </motion.div>
