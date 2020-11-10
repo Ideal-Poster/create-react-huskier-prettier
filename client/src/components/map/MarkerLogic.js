@@ -2,7 +2,7 @@ import React from "react";
 import { Marker } from "@react-google-maps/api";
 
 function MarkerLogic(_props) {
-  const { props, marker, selectedMarker } = _props;
+  const { marker, selectedMarker, selectMarker, deselectMarker } = _props;
 
   const isMarkerActive = () => {
     return selectedMarker && selectedMarker.id === marker.id;
@@ -29,10 +29,10 @@ function MarkerLogic(_props) {
       key={`${marker.created_at}-${marker.id}`}
       position={{ lat: marker.lat, lng: marker.lng }}
       onMouseOver={() => {
-        props.selectMarker(marker);
+        selectMarker(marker);
       }}
       onMouseOut={() => {
-        props.deselectMarker(marker);
+        deselectMarker(marker);
       }}
     />
   );

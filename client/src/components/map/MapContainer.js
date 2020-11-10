@@ -9,10 +9,10 @@ import Sidebar from "./Sidebar";
 import { motion } from "framer-motion";
 
 function MapContainer() {
-  const [selectedMarker, setSelectedMarker] = React.useState(null);
-  const [markers, setMarkers] = React.useState([]);
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
-  const [width, setWidth] = useState("100vw");
+  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
 
   const ref = React.useRef(null);
   const mouse = useMouse(ref, {
@@ -20,17 +20,20 @@ function MapContainer() {
     leaveDelay: 100,
   });
 
-  useEffect(() => {
-    console.log("hello");
-    isSidebarOpen ? setWidth("60vw") : setWidth("100vw");
-  }, [isSidebarOpen]);
-
   const selectMarker = (marker) => {
     setSelectedMarker(marker);
   };
 
   const deselectMarker = () => {
     setSelectedMarker(null);
+  };
+
+  const filterMarkers = (markers, category) => {
+    setMarkers(
+      markers.filter((marker) => {
+        return marker.languages.some((language) => language.name === category);
+      })
+    );
   };
 
   const mapRef = React.useRef();
@@ -44,6 +47,9 @@ function MapContainer() {
       <Sidebar
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
+        setSelectedLanguage={setSelectedLanguage}
+        filterMarkers={filterMarkers}
+        markers={markers}
       />
       <motion.div
         className="map__div"
@@ -52,14 +58,13 @@ function MapContainer() {
         animate={isSidebarOpen ? "show" : "hidden"}
       >
         <Map
-          width={width}
           mapRef={mapRef}
-          panTo={panTo}
           markers={markers}
           setMarkers={setMarkers}
-          selectMarker={selectMarker}
           selectedMarker={selectedMarker}
+          selectMarker={selectMarker}
           deselectMarker={deselectMarker}
+          selectedLanguage={selectedLanguage}
         />
       </motion.div>
     </div>

@@ -6,7 +6,16 @@ import { getLocations } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
 
 function Map(props) {
-  const { markers, setMarkers, mapRef, selectedMarker } = props;
+  const {
+    markers,
+    setMarkers,
+    mapRef,
+    selectedMarker,
+    selectMarker,
+    deselectMarker,
+    selectedLanguage,
+  } = props;
+
   useEffect(() => {
     const fetchMarkers = async () => {
       const res = await getLocations();
@@ -50,6 +59,8 @@ function Map(props) {
           props={props}
           marker={marker}
           selectedMarker={selectedMarker}
+          selectMarker={selectMarker}
+          deselectMarker={deselectMarker}
         />
       ))}
     </GoogleMap>

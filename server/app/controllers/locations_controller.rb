@@ -10,6 +10,11 @@ class LocationsController < ApplicationController
     end.flatten
     friends_locations << User.first.locations
     friends_locations.flatten!.uniq!
-    render json: friends_locations, include: { users: { only: :username } }, methods: :my_location?
+    render json: friends_locations,
+    include: {
+      users: { only: :username },
+      languages: { only: :name }
+    },
+    methods: :my_location?
   end
 end

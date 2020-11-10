@@ -5,7 +5,7 @@
   background: rgb(22, 22, 22);
   position: fixed;
   z-index: 4000;
-  min-width: 445px;
+  /* min-width: 445px; */
   overflow-y: scroll;
   position: absolute;
   /* left: -100%; */

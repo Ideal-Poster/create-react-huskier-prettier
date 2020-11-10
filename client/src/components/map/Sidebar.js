@@ -5,7 +5,13 @@ import "./Sidebar.css";
 import { getDashboard } from "../../requests";
 
 function Sidebar(props) {
-  const { isSidebarOpen, setIsSidebarOpen } = props;
+  const {
+    isSidebarOpen,
+    setIsSidebarOpen,
+    setSelectedLanguage,
+    filterMarkers,
+    markers,
+  } = props;
   const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchInfo = async () => {
@@ -40,7 +46,12 @@ function Sidebar(props) {
               <h1>Languages</h1>
               <ul>
                 {user.languages.map((language) => (
-                  <li key={`language-${language.name}`}>{language.name}</li>
+                  <li
+                    key={`language-${language.name}`}
+                    onClick={() => filterMarkers(markers, language.name)}
+                  >
+                    {language.name}
+                  </li>
                 ))}
               </ul>
             </div>
