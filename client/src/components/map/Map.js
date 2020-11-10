@@ -7,19 +7,20 @@ import MarkerLogic from "./MarkerLogic";
 
 function Map(props) {
   const {
-    markers,
     setMarkers,
     mapRef,
     selectedMarker,
     selectMarker,
     deselectMarker,
-    selectedLanguage,
+    filteredMarkers,
+    setFilteredMarkers,
   } = props;
 
   useEffect(() => {
     const fetchMarkers = async () => {
       const res = await getLocations();
       setMarkers(res.data);
+      setFilteredMarkers(res.data);
     };
     fetchMarkers();
   }, []);
@@ -54,7 +55,7 @@ function Map(props) {
       onClick={onMapClick}
       onLoad={onMapLoad}
     >
-      {markers.map((marker) => (
+      {filteredMarkers.map((marker) => (
         <MarkerLogic
           props={props}
           marker={marker}

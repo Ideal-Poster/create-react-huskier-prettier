@@ -11,8 +11,8 @@ import { motion } from "framer-motion";
 function MapContainer() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [filteredMarkers, setFilteredMarkers] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [selectedLanguage, setSelectedLanguage] = useState(null);
 
   const ref = React.useRef(null);
   const mouse = useMouse(ref, {
@@ -29,7 +29,7 @@ function MapContainer() {
   };
 
   const filterMarkers = (markers, category) => {
-    setMarkers(
+    setFilteredMarkers(
       markers.filter((marker) => {
         return marker.languages.some((language) => language.name === category);
       })
@@ -47,7 +47,6 @@ function MapContainer() {
       <Sidebar
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
-        setSelectedLanguage={setSelectedLanguage}
         filterMarkers={filterMarkers}
         markers={markers}
       />
@@ -60,11 +59,12 @@ function MapContainer() {
         <Map
           mapRef={mapRef}
           markers={markers}
+          filteredMarkers={filteredMarkers}
           setMarkers={setMarkers}
           selectedMarker={selectedMarker}
           selectMarker={selectMarker}
           deselectMarker={deselectMarker}
-          selectedLanguage={selectedLanguage}
+          setFilteredMarkers={setFilteredMarkers}
         />
       </motion.div>
     </div>

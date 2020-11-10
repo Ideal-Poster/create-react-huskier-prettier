@@ -5,13 +5,7 @@ import "./Sidebar.css";
 import { getDashboard } from "../../requests";
 
 function Sidebar(props) {
-  const {
-    isSidebarOpen,
-    setIsSidebarOpen,
-    setSelectedLanguage,
-    filterMarkers,
-    markers,
-  } = props;
+  const { isSidebarOpen, setIsSidebarOpen, filterMarkers, markers } = props;
   const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchInfo = async () => {
