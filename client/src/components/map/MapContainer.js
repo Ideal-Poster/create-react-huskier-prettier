@@ -9,7 +9,7 @@ import Sidebar from "./Sidebar";
 import { motion } from "framer-motion";
 
 function MapContainer() {
-  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [hoveredMarker, setHoveredMarker] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [filteredMarkers, setFilteredMarkers] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -35,7 +35,7 @@ function MapContainer() {
 
   return (
     <div className={styles.container} ref={ref}>
-      {selectedMarker && <HoverEffect mouse={mouse} marker={selectedMarker} />}
+      {hoveredMarker && <HoverEffect mouse={mouse} marker={hoveredMarker} />}
       <Sidebar
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
@@ -53,9 +53,9 @@ function MapContainer() {
           markers={markers}
           filteredMarkers={filteredMarkers}
           setMarkers={setMarkers}
-          selectedMarker={selectedMarker}
+          hoveredMarker={hoveredMarker}
           setFilteredMarkers={setFilteredMarkers}
-          setSelectedMarker={setSelectedMarker}
+          setHoveredMarker={setHoveredMarker}
           panTo={panTo}
         />
       </motion.div>

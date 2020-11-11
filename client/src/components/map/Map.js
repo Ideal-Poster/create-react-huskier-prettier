@@ -9,10 +9,10 @@ function Map(props) {
   const {
     setMarkers,
     mapRef,
-    selectedMarker,
+    hoveredMarker,
     filteredMarkers,
     setFilteredMarkers,
-    setSelectedMarker,
+    setHoveredMarker,
     panTo,
   } = props;
 
@@ -59,8 +59,8 @@ function Map(props) {
         <MarkerLogic
           props={props}
           marker={marker}
-          selectedMarker={selectedMarker}
-          setSelectedMarker={setSelectedMarker}
+          hoveredMarker={hoveredMarker}
+          setHoveredMarker={setHoveredMarker}
           panTo={panTo}
         />
       ))}

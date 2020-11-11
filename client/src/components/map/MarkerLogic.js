@@ -2,10 +2,10 @@ import React from "react";
 import { Marker } from "@react-google-maps/api";
 
 function MarkerLogic(_props) {
-  const { marker, selectedMarker, setSelectedMarker, panTo } = _props;
+  const { marker, hoveredMarker, setHoveredMarker, panTo } = _props;
 
   const isMarkerActive = () => {
-    return selectedMarker && selectedMarker.id === marker.id;
+    return hoveredMarker && hoveredMarker.id === marker.id;
   };
 
   const displayMarker = () => {
@@ -30,10 +30,10 @@ function MarkerLogic(_props) {
       position={{ lat: marker.lat, lng: marker.lng }}
       onClick={() => panTo(marker)}
       onMouseOver={() => {
-        setSelectedMarker(marker);
+        setHoveredMarker(marker);
       }}
       onMouseOut={() => {
-        setSelectedMarker(null);
+        setHoveredMarker(null);
       }}
     />
   );
