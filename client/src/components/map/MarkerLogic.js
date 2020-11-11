@@ -1,16 +1,25 @@
 import React from "react";
 import { Marker } from "@react-google-maps/api";
 
-function MarkerLogic(_props) {
-  const { marker, hoveredMarker, setHoveredMarker, panTo } = _props;
+function MarkerLogic({
+  marker,
+  hoveredMarker,
+  setHoveredMarker,
+  panTo,
+  setSelectedMarker,
+  selectedMarker,
+}) {
+  const isMarkerActive = () => hoveredMarker && hoveredMarker.id === marker.id;
 
-  const isMarkerActive = () => {
-    return hoveredMarker && hoveredMarker.id === marker.id;
-  };
+  const isMarkerSelected = () =>
+    selectedMarker && selectedMarker.id === marker.id;
 
   const displayMarker = () => {
     if (isMarkerActive()) {
-      return "Asset-5.svg";
+      return "Asset-8.svg";
+    }
+    if (isMarkerSelected()) {
+      return "Asset-8.svg";
     }
     if (marker["my_location?"] && !isMarkerActive()) {
       return "Asset-3.svg";
@@ -28,7 +37,10 @@ function MarkerLogic(_props) {
       }}
       key={`${marker.created_at}-${marker.id}`}
       position={{ lat: marker.lat, lng: marker.lng }}
-      onClick={() => panTo(marker)}
+      onClick={() => {
+        setSelectedMarker(marker);
+        // panTo(marker)
+      }}
       onMouseOver={() => {
         setHoveredMarker(marker);
       }}

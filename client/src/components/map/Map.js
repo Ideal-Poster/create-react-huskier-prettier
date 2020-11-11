@@ -5,17 +5,17 @@ import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import { getLocations } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
 
-function Map(props) {
-  const {
-    setMarkers,
-    mapRef,
-    hoveredMarker,
-    filteredMarkers,
-    setFilteredMarkers,
-    setHoveredMarker,
-    panTo,
-  } = props;
-
+function Map({
+  filteredMarkers,
+  hoveredMarker,
+  mapRef,
+  panTo,
+  setFilteredMarkers,
+  setHoveredMarker,
+  setMarkers,
+  setSelectedMarker,
+  selectedMarker,
+}) {
   useEffect(() => {
     const fetchMarkers = async () => {
       const res = await getLocations();
@@ -57,11 +57,12 @@ function Map(props) {
     >
       {filteredMarkers.map((marker) => (
         <MarkerLogic
-          props={props}
           marker={marker}
           hoveredMarker={hoveredMarker}
-          setHoveredMarker={setHoveredMarker}
           panTo={panTo}
+          setHoveredMarker={setHoveredMarker}
+          setSelectedMarker={setSelectedMarker}
+          selectedMarker={selectedMarker}
         />
       ))}
     </GoogleMap>

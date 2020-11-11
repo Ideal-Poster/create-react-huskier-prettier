@@ -3,13 +3,16 @@ import { motion } from "framer-motion";
 
 import styles from "./MapContainer.module.css"; // Import css modules stylesheet as styles
 
-function HoverEffect(props) {
-  const { mouse, marker } = props;
+function HoverEffect({ mouse, marker, selectedMarker }) {
   return (
     <div>
       <motion.div
         className={styles.hover__position}
-        animate={{ x: mouse.x + 25, y: mouse.y - 175 }}
+        animate={{
+          x: mouse.x + 25,
+          y: mouse.y - 175,
+          height: selectedMarker ? "100vh" : "105",
+        }}
         transition={{ duration: 0 }}
       >
         <motion.div

@@ -9,6 +9,7 @@ import Sidebar from "./Sidebar";
 import { motion } from "framer-motion";
 
 function MapContainer() {
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const [hoveredMarker, setHoveredMarker] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [filteredMarkers, setFilteredMarkers] = useState([]);
@@ -21,11 +22,15 @@ function MapContainer() {
   });
 
   const filterMarkers = (markers, category) => {
-    setFilteredMarkers(
-      markers.filter((marker) => {
-        return marker.languages.some((language) => language.name === category);
-      })
-    );
+    if (markers) {
+      setFilteredMarkers(
+        markers.filter((marker) => {
+          return marker.languages.some(
+            (language) => language.name === category
+          );
+        })
+      );
+    }
   };
 
   const mapRef = React.useRef();
@@ -35,7 +40,13 @@ function MapContainer() {
 
   return (
     <div className={styles.container} ref={ref}>
-      {hoveredMarker && <HoverEffect mouse={mouse} marker={hoveredMarker} />}
+      {hoveredMarker && (
+        <HoverEffect
+          mouse={mouse}
+          marker={hoveredMarker}
+          selectedMarker={selectedMarker}
+        />
+      )}
       <Sidebar
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
@@ -49,14 +60,15 @@ function MapContainer() {
         animate={isSidebarOpen ? "show" : "hidden"}
       >
         <Map
-          mapRef={mapRef}
-          markers={markers}
           filteredMarkers={filteredMarkers}
-          setMarkers={setMarkers}
           hoveredMarker={hoveredMarker}
+          mapRef={mapRef}
+          panTo={panTo}
           setFilteredMarkers={setFilteredMarkers}
           setHoveredMarker={setHoveredMarker}
-          panTo={panTo}
+          setMarkers={setMarkers}
+          setSelectedMarker={setSelectedMarker}
+          selectedMarker={selectedMarker}
         />
       </motion.div>
     </div>
