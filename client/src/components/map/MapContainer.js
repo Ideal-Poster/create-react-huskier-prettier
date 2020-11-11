@@ -56,6 +56,7 @@ function MapContainer() {
           selectedMarker={selectedMarker}
           setFilteredMarkers={setFilteredMarkers}
           setSelectedMarker={setSelectedMarker}
+          panTo={panTo}
         />
       </motion.div>
     </div>
