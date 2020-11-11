@@ -10,10 +10,9 @@ function Map(props) {
     setMarkers,
     mapRef,
     selectedMarker,
-    selectMarker,
-    deselectMarker,
     filteredMarkers,
     setFilteredMarkers,
+    setSelectedMarker,
   } = props;
 
   useEffect(() => {
@@ -60,8 +59,7 @@ function Map(props) {
           props={props}
           marker={marker}
           selectedMarker={selectedMarker}
-          selectMarker={selectMarker}
-          deselectMarker={deselectMarker}
+          setSelectedMarker={setSelectedMarker}
         />
       ))}
     </GoogleMap>

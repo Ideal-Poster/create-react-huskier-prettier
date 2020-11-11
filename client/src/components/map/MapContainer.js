@@ -20,14 +20,6 @@ function MapContainer() {
     leaveDelay: 100,
   });
 
-  const selectMarker = (marker) => {
-    setSelectedMarker(marker);
-  };
-
-  const deselectMarker = () => {
-    setSelectedMarker(null);
-  };
-
   const filterMarkers = (markers, category) => {
     setFilteredMarkers(
       markers.filter((marker) => {
@@ -62,9 +54,8 @@ function MapContainer() {
           filteredMarkers={filteredMarkers}
           setMarkers={setMarkers}
           selectedMarker={selectedMarker}
-          selectMarker={selectMarker}
-          deselectMarker={deselectMarker}
           setFilteredMarkers={setFilteredMarkers}
+          setSelectedMarker={setSelectedMarker}
         />
       </motion.div>
     </div>
