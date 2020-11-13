@@ -1,21 +1,29 @@
-import React, { useEffect } from "react";
-import { useLoadScript, GoogleMap } from "@react-google-maps/api";
+import React, { useEffect, useState } from "react";
+import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import { getLocations } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
+import Pin from "./Pin";
 
 function Map({
   filteredMarkers,
   hoveredMarker,
-  mapRef,
   panTo,
   setFilteredMarkers,
   setHoveredMarker,
   setMarkers,
   setSelectedMarker,
   selectedMarker,
+  markers,
 }) {
+  console.log("hello");
+  const [isPinShown, setIsPinShown] = useState(false);
+  const [pinPos, setPinPos] = useState({});
+  const [isPinDragging, setIsPinDragging] = useState(false);
+
+  const mapRef = React.useRef();
+
   useEffect(() => {
     const fetchMarkers = async () => {
       const res = await getLocations();
@@ -25,19 +33,36 @@ function Map({
     fetchMarkers();
   }, []);
 
+  useEffect(() => {
+    setFilteredMarkers(markers);
+  }, [markers]);
+
   const onMapClick = React.useCallback((event) => {
-    setMarkers((current) => [
-      ...current,
-      {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
+    // setFilteredMarkers((current) => [
+    //   ...current,
+    //   {
+    //     lat: event.latLng.lat(),
+    //     lng: event.latLng.lng(),
+    //     time: new Date(),
+    //   },
+    // ]);
+    setIsPinShown(true);
+
+    if (selectedMarker) {
+      setIsPinShown(false);
+    } else {
+      setIsPinShown(true);
+      setPinPos({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+    }
+
+    selectedMarker ? setIsPinShown(false) : setIsPinShown(true);
+
+    // selectedMarker ? setPinPos({}) : setPinPos({lat: event.latLng.lat(), lng: event.latLng.lng()})
+    setPinPos({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+    setSelectedMarker(null);
   }, []);
 
   const onMapLoad = React.useCallback((map) => (mapRef.current = map), []);
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -65,6 +90,8 @@ function Map({
           selectedMarker={selectedMarker}
         />
       ))}
+
+      {isPinShown && <Pin pinPos={pinPos} setPinPos={setPinPos} />}
     </GoogleMap>
   );
 }

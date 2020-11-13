@@ -15,10 +15,7 @@ function MarkerLogic({
     selectedMarker && selectedMarker.id === marker.id;
 
   const displayMarker = () => {
-    if (isMarkerActive()) {
-      return "Asset-8.svg";
-    }
-    if (isMarkerSelected()) {
+    if (isMarkerActive() || isMarkerSelected()) {
       return "Asset-8.svg";
     }
     if (marker["my_location?"] && !isMarkerActive()) {

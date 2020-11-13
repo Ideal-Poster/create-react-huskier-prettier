@@ -40,7 +40,7 @@ function MapContainer() {
 
   return (
     <div className={styles.container} ref={ref}>
-      {hoveredMarker && (
+      {hoveredMarker && hoveredMarker.id && (
         <HoverEffect
           mouse={mouse}
           marker={hoveredMarker}
@@ -63,7 +63,7 @@ function MapContainer() {
           filteredMarkers={filteredMarkers}
           hoveredMarker={hoveredMarker}
           mapRef={mapRef}
-          panTo={panTo}
+          markers={markers}
           setFilteredMarkers={setFilteredMarkers}
           setHoveredMarker={setHoveredMarker}
           setMarkers={setMarkers}

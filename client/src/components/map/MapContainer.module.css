@@ -3,6 +3,7 @@
   width: 100vw;
   position: relative;
   background: black;
+  z-index: 10000;
 }
 
 .hover__position {
