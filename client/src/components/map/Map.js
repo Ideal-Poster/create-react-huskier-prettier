@@ -5,6 +5,7 @@ import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import { getLocations } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
 import Pin from "./Pin";
+import HoverEffect from "./HoverEffect";
 
 function Map({
   filteredMarkers,
@@ -17,10 +18,10 @@ function Map({
   selectedMarker,
   markers,
 }) {
-  console.log("hello");
   const [isPinShown, setIsPinShown] = useState(false);
   const [pinPos, setPinPos] = useState({});
   const [isPinDragging, setIsPinDragging] = useState(false);
+  const [mousePos, setMousePos] = useState({});
 
   const mapRef = React.useRef();
 
@@ -72,27 +73,40 @@ function Map({
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <GoogleMap
-      mapContainerStyle={mapContainerStyle}
-      zoom={13}
-      center={center}
-      options={options}
-      onClick={onMapClick}
-      onLoad={onMapLoad}
-    >
-      {filteredMarkers.map((marker) => (
-        <MarkerLogic
-          marker={marker}
-          hoveredMarker={hoveredMarker}
-          panTo={panTo}
-          setHoveredMarker={setHoveredMarker}
-          setSelectedMarker={setSelectedMarker}
+    <div>
+      {hoveredMarker && hoveredMarker.id && (
+        <HoverEffect
+          mouse={mousePos}
+          marker={hoveredMarker}
           selectedMarker={selectedMarker}
         />
-      ))}
+      )}
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        zoom={13}
+        center={center}
+        options={options}
+        onClick={onMapClick}
+        onLoad={onMapLoad}
+        onMouseMove={(e) => {
+          setMousePos(e.pixel);
+          console.log(e.pixel);
+        }}
+      >
+        {filteredMarkers.map((marker) => (
+          <MarkerLogic
+            marker={marker}
+            hoveredMarker={hoveredMarker}
+            panTo={panTo}
+            setHoveredMarker={setHoveredMarker}
+            setSelectedMarker={setSelectedMarker}
+            selectedMarker={selectedMarker}
+          />
+        ))}
 
-      {isPinShown && <Pin pinPos={pinPos} setPinPos={setPinPos} />}
-    </GoogleMap>
+        {isPinShown && <Pin pinPos={pinPos} setPinPos={setPinPos} />}
+      </GoogleMap>
+    </div>
   );
 }
 

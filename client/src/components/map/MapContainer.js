@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useMouse from "@react-hook/mouse-position";
+// import useMouse from "@react-hook/mouse-position";
 
 import styles from "./MapContainer.module.css"; // Import css modules stylesheet as styles
 import Map from "./Map";
@@ -15,11 +15,11 @@ function MapContainer() {
   const [filteredMarkers, setFilteredMarkers] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  const ref = React.useRef(null);
-  const mouse = useMouse(ref, {
-    enterDelay: 100,
-    leaveDelay: 100,
-  });
+  // const ref = React.useRef(null);
+  // const mouse = useMouse(ref, {
+  //   enterDelay: 100,
+  //   leaveDelay: 100,
+  // });
 
   const filterMarkers = (markers, category) => {
     if (markers) {
@@ -39,14 +39,17 @@ function MapContainer() {
   });
 
   return (
-    <div className={styles.container} ref={ref}>
-      {hoveredMarker && hoveredMarker.id && (
+    <div
+      className={styles.container}
+      // ref={ref}
+    >
+      {/* {hoveredMarker && hoveredMarker.id && (
         <HoverEffect
           mouse={mouse}
           marker={hoveredMarker}
           selectedMarker={selectedMarker}
         />
-      )}
+      )} */}
       <Sidebar
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
