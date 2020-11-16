@@ -76,7 +76,7 @@ function Map({
     <div>
       {hoveredMarker && hoveredMarker.id && (
         <HoverEffect
-          mouse={mousePos}
+          mousePos={mousePos}
           marker={hoveredMarker}
           selectedMarker={selectedMarker}
         />
@@ -90,7 +90,7 @@ function Map({
         onLoad={onMapLoad}
         onMouseMove={(e) => {
           setMousePos(e.pixel);
-          console.log(e.pixel);
+          // console.log(e.pixel);
         }}
       >
         {filteredMarkers.map((marker) => (
@@ -104,7 +104,9 @@ function Map({
           />
         ))}
 
-        {isPinShown && <Pin pinPos={pinPos} setPinPos={setPinPos} />}
+        {isPinShown && (
+          <Pin mousePos={mousePos} pinPos={pinPos} setPinPos={setPinPos} />
+        )}
       </GoogleMap>
     </div>
   );
