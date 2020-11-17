@@ -22,8 +22,24 @@ function Map({
   const [pinPos, setPinPos] = useState({});
   const [isPinDragging, setIsPinDragging] = useState(false);
   const [mousePos, setMousePos] = useState({});
+  const [hoveredQueue, setHoveredQueue] = useState([]);
 
   const mapRef = React.useRef();
+
+  useEffect(() => {
+    if (hoveredMarker) {
+      setHoveredQueue((current) => [...current, hoveredMarker]);
+    } else {
+      setHoveredQueue((current) =>
+        // {
+        //   let thing = current
+        //   thing.pop()
+        //   return thing
+        // }
+        current.filter((marker) => current[current.length - 1].id === marker.id)
+      );
+    }
+  }, [hoveredMarker]);
 
   useEffect(() => {
     const fetchMarkers = async () => {
@@ -39,6 +55,7 @@ function Map({
   }, [markers]);
 
   const onMapClick = React.useCallback((event) => {
+    // console.log(event);
     // setFilteredMarkers((current) => [
     //   ...current,
     //   {
@@ -74,13 +91,16 @@ function Map({
 
   return (
     <div>
-      {hoveredMarker && hoveredMarker.id && (
+      {/* {hoveredMarker &&  ( */}
+      {hoveredQueue.map(() => (
         <HoverEffect
           mousePos={mousePos}
           marker={hoveredMarker}
           selectedMarker={selectedMarker}
+          hoveredMarker={hoveredMarker}
         />
-      )}
+      ))}
+      {/* )} */}
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={13}

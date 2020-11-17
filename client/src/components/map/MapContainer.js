@@ -30,7 +30,7 @@ function MapContainer() {
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
   });
-  console.log(mapRef);
+
   return (
     <div
       className={styles.container}

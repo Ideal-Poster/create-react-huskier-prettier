@@ -7,6 +7,7 @@ import HoverEffect from "./HoverEffect";
 function Pin({ mousePos, pinPos, setPinPos }) {
   const [isPinDragging, setIsPinDragging] = useState(false);
   const [pixelPos, setPixelPos] = useState({ x: 0, y: 0 });
+  // const [isHoverEffectHidden, setIsHoverEffectHidden] = useState();
 
   const handlePosEvent = (event) => {
     if (event.latLng) {
@@ -17,6 +18,7 @@ function Pin({ mousePos, pinPos, setPinPos }) {
   const onDragStart = (event) => {
     console.log("hwllo");
     handlePosEvent(event);
+
     // setIsPinDragging(true);
   };
 
@@ -29,6 +31,7 @@ function Pin({ mousePos, pinPos, setPinPos }) {
 
   return pinPos.lat && pinPos.lng ? (
     <>
+      {}
       <HoverEffect
         mousePos={mousePos}
         pixelPos={pixelPos}
