@@ -8,6 +8,7 @@ function MarkerLogic({
   panTo,
   setSelectedMarker,
   selectedMarker,
+  isPinShown,
 }) {
   const isMarkerActive = () => hoveredMarker && hoveredMarker.id === marker.id;
 
@@ -39,7 +40,7 @@ function MarkerLogic({
         // panTo(marker)
       }}
       onMouseOver={() => {
-        setHoveredMarker(marker);
+        if (!isPinShown) setHoveredMarker(marker);
       }}
       onMouseOut={() => {
         setHoveredMarker(null);

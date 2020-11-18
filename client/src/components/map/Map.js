@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
+import { useLoadScript, GoogleMap } from "@react-google-maps/api";
 
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import { getLocations } from "../../requests";
@@ -20,7 +20,7 @@ function Map({
 }) {
   const [isPinShown, setIsPinShown] = useState(false);
   const [pinPos, setPinPos] = useState({});
-  const [isPinDragging, setIsPinDragging] = useState(false);
+  const [pixelPos, setPixelPos] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({});
   const [hoveredQueue, setHoveredQueue] = useState([]);
 
@@ -31,11 +31,6 @@ function Map({
       setHoveredQueue((current) => [...current, hoveredMarker]);
     } else {
       setHoveredQueue((current) =>
-        // {
-        //   let thing = current
-        //   thing.pop()
-        //   return thing
-        // }
         current.filter((marker) => current[current.length - 1].id === marker.id)
       );
     }
@@ -55,16 +50,11 @@ function Map({
   }, [markers]);
 
   const onMapClick = React.useCallback((event) => {
-    // console.log(event);
-    // setFilteredMarkers((current) => [
-    //   ...current,
-    //   {
-    //     lat: event.latLng.lat(),
-    //     lng: event.latLng.lng(),
-    //     time: new Date(),
-    //   },
-    // ]);
-    setIsPinShown(true);
+    setPixelPos({
+      x: -1 * (window.innerWidth / 2 - event.pixel.x),
+      y: -1 * (window.innerHeight / 2 - event.pixel.y),
+    });
+    // setIsPinShown(true);
 
     if (selectedMarker) {
       setIsPinShown(false);
@@ -92,14 +82,7 @@ function Map({
   return (
     <div>
       {/* {hoveredMarker &&  ( */}
-      {hoveredQueue.map(() => (
-        <HoverEffect
-          mousePos={mousePos}
-          marker={hoveredMarker}
-          selectedMarker={selectedMarker}
-          hoveredMarker={hoveredMarker}
-        />
-      ))}
+
       {/* )} */}
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -113,6 +96,14 @@ function Map({
           // console.log(e.pixel);
         }}
       >
+        {hoveredQueue.map(() => (
+          <HoverEffect
+            mousePos={mousePos}
+            marker={hoveredMarker}
+            selectedMarker={selectedMarker}
+            hoveredMarker={hoveredMarker}
+          />
+        ))}
         {filteredMarkers.map((marker) => (
           <MarkerLogic
             marker={marker}
@@ -121,11 +112,20 @@ function Map({
             setHoveredMarker={setHoveredMarker}
             setSelectedMarker={setSelectedMarker}
             selectedMarker={selectedMarker}
+            isPinShown={isPinShown}
           />
         ))}
 
         {isPinShown && (
-          <Pin mousePos={mousePos} pinPos={pinPos} setPinPos={setPinPos} />
+          <Pin
+            pixelPos={pixelPos}
+            setPixelPos={setPixelPos}
+            mousePos={mousePos}
+            pinPos={pinPos}
+            setPinPos={setPinPos}
+            setIsPinShown={setIsPinShown}
+            isPinShown={isPinShown}
+          />
         )}
       </GoogleMap>
     </div>

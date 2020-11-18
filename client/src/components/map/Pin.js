@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Marker } from "@react-google-maps/api";
 
-import { debounce } from "../../utils";
 import HoverEffect from "./HoverEffect";
 
-function Pin({ mousePos, pinPos, setPinPos }) {
+function Pin({
+  mousePos,
+  pinPos,
+  setPinPos,
+  pixelPos,
+  setPixelPos,
+  setIsPinShown,
+}) {
   const [isPinDragging, setIsPinDragging] = useState(false);
-  const [pixelPos, setPixelPos] = useState({ x: 0, y: 0 });
-  // const [isHoverEffectHidden, setIsHoverEffectHidden] = useState();
+  const [isHoverHidden, setIsHoverHidden] = useState(false);
 
   const handlePosEvent = (event) => {
     if (event.latLng) {
@@ -16,27 +21,27 @@ function Pin({ mousePos, pinPos, setPinPos }) {
   };
 
   const onDragStart = (event) => {
-    console.log("hwllo");
     handlePosEvent(event);
-
-    // setIsPinDragging(true);
+    setIsPinDragging(true);
+    setIsHoverHidden(true);
   };
 
   const onDragEnd = (event) => {
-    console.log(event);
     handlePosEvent(event);
-    // setIsPinDragging(false);
     setPixelPos({ x: event.pixel.x, y: event.pixel.y });
+    setIsPinDragging(false);
+    setIsHoverHidden(false);
   };
 
   return pinPos.lat && pinPos.lng ? (
     <>
-      {}
       <HoverEffect
         mousePos={mousePos}
         pixelPos={pixelPos}
         setPixelPos={setPixelPos}
         pin={true}
+        isHoverHidden={isHoverHidden}
+        setIsPinShown={setIsPinShown}
       />
       <Marker
         draggable={true}
@@ -45,10 +50,8 @@ function Pin({ mousePos, pinPos, setPinPos }) {
           scaledSize: new window.google.maps.Size(35, 35),
         }}
         position={{ lat: pinPos.lat, lng: pinPos.lng }}
-        // onDragStart={onDragStart}
-        // onVisibleChanged={console.log('cursorchanged')}
+        onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        // ondrag={debounce(handlePosEvent(), 50)}
       />
     </>
   ) : null;
