@@ -12,7 +12,6 @@ function Pin({
   setIsPinShown,
 }) {
   const [isPinDragging, setIsPinDragging] = useState(false);
-  const [isHoverHidden, setIsHoverHidden] = useState(false);
 
   const handlePosEvent = (event) => {
     if (event.latLng) {
@@ -23,14 +22,12 @@ function Pin({
   const onDragStart = (event) => {
     handlePosEvent(event);
     setIsPinDragging(true);
-    setIsHoverHidden(true);
   };
 
   const onDragEnd = (event) => {
     handlePosEvent(event);
     setPixelPos({ x: event.pixel.x, y: event.pixel.y });
     setIsPinDragging(false);
-    setIsHoverHidden(false);
   };
 
   return pinPos.lat && pinPos.lng ? (
@@ -38,10 +35,10 @@ function Pin({
       <HoverEffect
         mousePos={mousePos}
         pixelPos={pixelPos}
-        setPixelPos={setPixelPos}
         pin={true}
-        isHoverHidden={isHoverHidden}
+        setPixelPos={setPixelPos}
         setIsPinShown={setIsPinShown}
+        isPinDragging={isPinDragging}
       />
       <Marker
         draggable={true}

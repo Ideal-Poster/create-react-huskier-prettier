@@ -9,13 +9,12 @@ function HoverEffect({
   pixelPos,
   pin,
   hoveredMarker,
-  isHoverEffectHidden,
   setIsPinShown,
+  isPinDragging,
 }) {
   return (
     <AnimatePresence>
-      {((hoveredMarker && hoveredMarker.id) ||
-        (pin && !isHoverEffectHidden)) && (
+      {((hoveredMarker && hoveredMarker.id) || (pin && !isPinDragging)) && (
         <motion.div
           className={styles.hover__position}
           animate={{
