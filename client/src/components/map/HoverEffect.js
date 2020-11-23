@@ -11,20 +11,36 @@ function HoverEffect({
   hoveredMarker,
   setIsPinShown,
   isPinDragging,
+  setSelectedMarker,
 }) {
+  console.log(hoveredMarker);
+
+  const displayPosition = () => {
+    if (pin) {
+      return {
+        x: window.innerWidth / 2 + pixelPos.x - 100,
+        y: window.innerHeight / 2 + pixelPos.y - 200,
+        opacity: 1,
+      };
+    } else {
+      return {
+        x: mousePos.x - 100,
+        y: mousePos.y - 200,
+        opacity: 1,
+      };
+    }
+  };
+
+  const isEffectDisplayed = () =>
+    ((hoveredMarker && hoveredMarker.id) || (pin && !isPinDragging)) &&
+    !selectedMarker;
+
   return (
     <AnimatePresence>
-      {((hoveredMarker && hoveredMarker.id) || (pin && !isPinDragging)) && (
+      {isEffectDisplayed() && (
         <motion.div
           className={styles.hover__position}
-          animate={{
-            y: pin
-              ? window.innerHeight / 2 + pixelPos.y - 200
-              : mousePos.y - 175,
-            x: pin
-              ? window.innerWidth / 2 + pixelPos.x - 100
-              : mousePos.x - 100,
-          }}
+          animate={displayPosition()}
           transition={{ duration: 0 }}
         >
           <motion.div
@@ -32,13 +48,15 @@ function HoverEffect({
             className={styles.hover__container}
             animate={"show"}
             transition={{ duration: 0.2 }}
-            variants={hidingAnimation}
+            variants={displayAnimation}
             exit={"exit"}
           >
             <motion.div className={styles.hover__content}>
               {/* {hoveredMarker.id} */}
 
               {pin && <p onClick={() => setIsPinShown(false)}>remove pin</p>}
+
+              <p onClick={() => setSelectedMarker(null)}>closed</p>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -47,9 +65,10 @@ function HoverEffect({
   );
 }
 
-const hidingAnimation = {
+const displayAnimation = {
   hidden: {
     width: "0%",
+    // scaleX: 0,
     transition: {
       ease: [0.16, 1, 0.3, 1],
       duration: 0.4,
@@ -57,6 +76,7 @@ const hidingAnimation = {
   },
   show: {
     width: "100%",
+    // scaleX: 1,
     transition: {
       ease: [0.16, 1, 0.3, 1],
       duration: 0.4,

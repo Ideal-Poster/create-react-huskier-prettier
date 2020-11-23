@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLoadScript, GoogleMap } from "@react-google-maps/api";
+import { motion } from "framer-motion";
 
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
 import { getLocations } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
 import Pin from "./Pin";
 import HoverEffect from "./HoverEffect";
+
+import styles from "./MapContainer.module.css";
 
 function Map({
   filteredMarkers,
@@ -50,11 +53,12 @@ function Map({
   }, [markers]);
 
   const onMapClick = React.useCallback((event) => {
-    setPixelPos({
-      x: -1 * (window.innerWidth / 2 - event.pixel.x),
-      y: -1 * (window.innerHeight / 2 - event.pixel.y),
-    });
-    // setIsPinShown(true);
+    if (event.pixel) {
+      setPixelPos({
+        x: -1 * (window.innerWidth / 2 - event.pixel.x),
+        y: -1 * (window.innerHeight / 2 - event.pixel.y),
+      });
+    }
 
     if (selectedMarker) {
       setIsPinShown(false);
@@ -65,7 +69,6 @@ function Map({
 
     selectedMarker ? setIsPinShown(false) : setIsPinShown(true);
 
-    // selectedMarker ? setPinPos({}) : setPinPos({lat: event.latLng.lat(), lng: event.latLng.lng()})
     setPinPos({ lat: event.latLng.lat(), lng: event.latLng.lng() });
     setSelectedMarker(null);
   }, []);
@@ -81,9 +84,6 @@ function Map({
 
   return (
     <div>
-      {/* {hoveredMarker &&  ( */}
-
-      {/* )} */}
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={13}
@@ -93,7 +93,6 @@ function Map({
         onLoad={onMapLoad}
         onMouseMove={(e) => {
           setMousePos(e.pixel);
-          // console.log(e.pixel);
         }}
       >
         {hoveredQueue.map(() => (
@@ -101,6 +100,7 @@ function Map({
             mousePos={mousePos}
             marker={hoveredMarker}
             selectedMarker={selectedMarker}
+            setSelectedMarker={setSelectedMarker}
             hoveredMarker={hoveredMarker}
           />
         ))}
@@ -128,8 +128,47 @@ function Map({
           />
         )}
       </GoogleMap>
+
+      {selectedMarker && (
+        <motion.div
+          className={styles.select__div}
+          animate={selectedMarker ? "show" : "hidden"}
+          variants={displayAnimation}
+          initial={"hidden"}
+          transition={{ duration: 0.2 }}
+          exit={"exit"}
+        >
+          <p onClick={() => setSelectedMarker(null)}> hello </p>
+        </motion.div>
+      )}
     </div>
   );
 }
 
+const displayAnimation = {
+  hidden: {
+    width: "0%",
+    // scaleX: 0,
+    transition: {
+      ease: [0.16, 1, 0.3, 1],
+      duration: 0.4,
+    },
+  },
+  show: {
+    width: "100%",
+    // scaleX: 1,
+    transition: {
+      delay: 0.2,
+      ease: [0.16, 1, 0.3, 1],
+      duration: 0.4,
+    },
+  },
+  exit: {
+    scaleX: 0,
+    transition: {
+      delay: 0.2,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
 export default Map;

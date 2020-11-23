@@ -23,47 +23,54 @@ function Sidebar(props) {
         initial="hidden"
         animate={isSidebarOpen ? "show" : "hidden"}
       >
-        {user && (
-          <div>
-            <div>
-              <h1>{user.username}</h1>
-              <ul>
-                <li>visits {user.visits.length}</li>
-                <li>
-                  last visit:{" "}
-                  {user.visits.sort((a, b) => b.id - a.id)[0].location.name}
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h1>Languages</h1>
-              <ul>
-                {user.languages.map((language) => (
-                  <li
-                    key={`language-${language.name}`}
-                    onClick={() => filterMarkers(markers, language.name)}
-                  >
-                    {language.name}
+        <motion.div
+          variants={sidebarContentsAnimation}
+          initial="hidden"
+          animate={isSidebarOpen ? "show" : "hidden"}
+        >
+          {user && (
+            <div className="sidebar__container">
+              <div>
+                <h1>{user.username}</h1>
+                <ul>
+                  <li>visits {user.visits.length}</li>
+                  <li>
+                    last visit:{" "}
+                    {user.visits.sort((a, b) => b.id - a.id)[0].location.name}
                   </li>
-                ))}
-              </ul>
-            </div>
+                </ul>
+              </div>
 
-            <div>
-              <h1>Friends</h1>
-              <ul>
-                {user.friends.map((friend) => (
-                  <li key={`username-${friend.username}`}>
-                    {" "}
-                    {friend.username}{" "}
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <h1>Languages</h1>
+                <ul>
+                  {user.languages.map((language) => (
+                    <li
+                      key={`language-${language.name}`}
+                      onClick={() => filterMarkers(markers, language.name)}
+                    >
+                      {language.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h1>Friends</h1>
+                <ul>
+                  {user.friends.map((friend) => (
+                    <li key={`username-${friend.username}`}>
+                      {" "}
+                      {friend.username}{" "}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </motion.div>
       </motion.div>
+
       <motion.div
         id="sidebar__button"
         initial="hidden"
@@ -74,6 +81,23 @@ function Sidebar(props) {
     </div>
   );
 }
+
+const sidebarContentsAnimation = {
+  hidden: {
+    x: `100%`,
+    transition: {
+      ease: [0.16, 1, 0.3, 1],
+      duration: 0.55,
+    },
+  },
+  show: {
+    x: "0%",
+    transition: {
+      ease: [0.16, 1, 0.3, 1],
+      duration: 0.55,
+    },
+  },
+};
 
 const sidebarAnimation = {
   hidden: {
@@ -101,7 +125,7 @@ const buttonAnimation = {
     },
   },
   open: {
-    x: "40vw",
+    x: "33.3vw",
     transition: {
       ease: [0.16, 1, 0.3, 1],
       duration: 0.55,

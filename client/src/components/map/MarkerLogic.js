@@ -40,7 +40,8 @@ function MarkerLogic({
         // panTo(marker)
       }}
       onMouseOver={() => {
-        if (!isPinShown) setHoveredMarker(marker);
+        // if (!isPinShown)
+        setHoveredMarker(marker);
       }}
       onMouseOut={() => {
         setHoveredMarker(null);

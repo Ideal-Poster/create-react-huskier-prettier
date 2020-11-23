@@ -32,10 +32,7 @@ function MapContainer() {
   });
 
   return (
-    <div
-      className={styles.container}
-      // ref={ref}
-    >
+    <div className={styles.container}>
       <Sidebar
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
@@ -73,7 +70,7 @@ const containerAnimation = {
     },
   },
   show: {
-    width: "60vw",
+    width: "66.7vw",
     transition: {
       ease: [0.16, 1, 0.3, 1],
       duration: 0.55,

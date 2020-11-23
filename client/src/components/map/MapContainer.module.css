@@ -4,6 +4,7 @@
   position: relative;
   background: black;
   z-index: 10000;
+  font-family: "Larsseit";
 }
 
 .hover__position {
@@ -12,12 +13,15 @@
   width: 200px;
   height: 150px;
   z-index: 1000;
+  opacity: 0;
 }
 
 .hover__container {
   width: 0;
   height: 100%;
-  background: green;
+  /* background: #fceacd; */
+  background: #f06e55;
+
   transform-origin: right;
 }
 
@@ -25,4 +29,13 @@
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+.select__div {
+  position: absolute;
+  background: white;
+  height: 100vh;
+  width: 0vw;
+  z-index: 1000;
+  overflow-x: hidden;
 }
