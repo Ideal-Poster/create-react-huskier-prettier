@@ -27,6 +27,7 @@ function Map({
   const [mousePos, setMousePos] = useState({});
   const [hoveredQueue, setHoveredQueue] = useState([]);
   const [isPinHoverEffectShown, setIsPinHoverEffectShown] = useState(true);
+  const [isPinEditOpen, setIsPinEditOpen] = useState(false);
 
   const mapRef = React.useRef();
 
@@ -54,6 +55,8 @@ function Map({
   }, [markers]);
 
   const onMapClick = React.useCallback((event) => {
+    // const [isPinEditOpen, setIsPinEditOpen] = useState(false);
+    // setIsPinEditOpen(false)
     if (event.pixel) {
       setPixelPos({
         x: -1 * (window.innerWidth / 2 - event.pixel.x),
@@ -95,7 +98,9 @@ function Map({
         onMouseMove={(e) => {
           setMousePos(e.pixel);
         }}
-        onZoomChanged={() => setIsPinHoverEffectShown(false)}
+        onZoomChanged={(e) => {
+          setIsPinHoverEffectShown(false);
+        }}
         onResize={() => setIsPinHoverEffectShown(false)}
         onDragStart={() => setIsPinHoverEffectShown(false)}
       >
@@ -131,6 +136,8 @@ function Map({
             isPinShown={isPinShown}
             isPinHoverEffectShown={isPinHoverEffectShown}
             setIsPinHoverEffectShown={setIsPinHoverEffectShown}
+            isPinEditOpen={isPinEditOpen}
+            setIsPinEditOpen={setIsPinEditOpen}
           />
         )}
       </GoogleMap>

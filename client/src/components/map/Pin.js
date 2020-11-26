@@ -13,8 +13,9 @@ function Pin({
   setIsPinShown,
   isPinHoverEffectShown,
   setIsPinHoverEffectShown,
+  isPinEditOpen,
+  setIsPinEditOpen,
 }) {
-  const [isPinEditOpen, setIsPinEditOpen] = useState(false);
   const [isPinDragging, setIsPinDragging] = useState(false);
   const [address, setAddress] = useState("");
 
@@ -25,6 +26,8 @@ function Pin({
     };
     if (pinPos.lat && pinPos.lng) fetchAdress();
   }, [pinPos.lat, pinPos.lng]);
+
+  useEffect(() => setIsPinHoverEffectShown(true), []);
 
   const handlePosEvent = (event) => {
     if (event.latLng) {
@@ -46,7 +49,7 @@ function Pin({
   const onMouseOver = async (e) => {
     if (!isPinHoverEffectShown) {
       setIsPinHoverEffectShown(true);
-      setPixelPos({ x: e.pixel.x, y: e.pixel.y });
+      setPixelPos(e.pixel);
     }
   };
 
