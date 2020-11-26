@@ -26,6 +26,7 @@ function HoverEffect({
           y: window.innerHeight / 2 + pixelPos.y - 200,
           opacity: 1,
           width: "400px",
+          height: "500px",
           transition: {
             ease: [0.16, 1, 0.3, 1],
             duration: 0.55,
