@@ -17,4 +17,15 @@ class LocationsController < ApplicationController
     },
     methods: :my_location?
   end
+
+  def create
+    # Location.create("")
+    byebug
+  end
+
+  private
+
+  def location_params
+    # params.require(:user).permit(:username, :password)
+  end
 end

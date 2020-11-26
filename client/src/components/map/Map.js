@@ -26,6 +26,7 @@ function Map({
   const [pixelPos, setPixelPos] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({});
   const [hoveredQueue, setHoveredQueue] = useState([]);
+  const [isPinHoverEffectShown, setIsPinHoverEffectShown] = useState(true);
 
   const mapRef = React.useRef();
 
@@ -94,6 +95,9 @@ function Map({
         onMouseMove={(e) => {
           setMousePos(e.pixel);
         }}
+        onZoomChanged={() => setIsPinHoverEffectShown(false)}
+        onResize={() => setIsPinHoverEffectShown(false)}
+        onDragStart={() => setIsPinHoverEffectShown(false)}
       >
         {hoveredQueue.map(() => (
           <HoverEffect
@@ -125,6 +129,8 @@ function Map({
             setPinPos={setPinPos}
             setIsPinShown={setIsPinShown}
             isPinShown={isPinShown}
+            isPinHoverEffectShown={isPinHoverEffectShown}
+            setIsPinHoverEffectShown={setIsPinHoverEffectShown}
           />
         )}
       </GoogleMap>
