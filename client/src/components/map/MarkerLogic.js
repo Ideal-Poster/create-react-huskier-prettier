@@ -5,10 +5,10 @@ function MarkerLogic({
   marker,
   hoveredMarker,
   setHoveredMarker,
-  panTo,
+  // panTo,
   setSelectedMarker,
   selectedMarker,
-  isPinShown,
+  // isPinShown,
 }) {
   const isMarkerActive = () => hoveredMarker && hoveredMarker.id === marker.id;
 

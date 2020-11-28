@@ -7,11 +7,11 @@ import { getDashboard } from "../../requests";
 function Sidebar(props) {
   const { isSidebarOpen, setIsSidebarOpen, filterMarkers, markers } = props;
   const [user, setUser] = useState(null);
+  const fetchInfo = async () => {
+    const res = await getDashboard();
+    setUser(res.data);
+  };
   useEffect(() => {
-    const fetchInfo = async () => {
-      const res = await getDashboard();
-      setUser(res.data);
-    };
     fetchInfo();
   }, []);
 

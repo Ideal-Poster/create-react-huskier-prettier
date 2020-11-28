@@ -13,7 +13,7 @@ import styles from "./MapContainer.module.css";
 function Map({
   filteredMarkers,
   hoveredMarker,
-  panTo,
+  // panTo,
   setFilteredMarkers,
   setHoveredMarker,
   setMarkers,
@@ -30,6 +30,9 @@ function Map({
   const [isPinEditOpen, setIsPinEditOpen] = useState(false);
 
   const mapRef = React.useRef();
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+  });
 
   useEffect(() => {
     if (hoveredMarker) {
@@ -55,9 +58,8 @@ function Map({
   }, [markers]);
 
   const onMapClick = React.useCallback((event) => {
-    // const [isPinEditOpen, setIsPinEditOpen] = useState(false);
-    // setIsPinEditOpen(false)
     if (event.pixel) {
+      console.log(pixelPos, event.pixel.x);
       setPixelPos({
         x: -1 * (window.innerWidth / 2 - event.pixel.x),
         y: -1 * (window.innerHeight / 2 - event.pixel.y),
@@ -101,8 +103,14 @@ function Map({
         onZoomChanged={(e) => {
           setIsPinHoverEffectShown(false);
         }}
-        onResize={() => setIsPinHoverEffectShown(false)}
-        onDragStart={() => setIsPinHoverEffectShown(false)}
+        onResize={() => {
+          setIsPinHoverEffectShown(false);
+          setIsPinEditOpen(false);
+        }}
+        onDragStart={() => {
+          setIsPinHoverEffectShown(false);
+          setIsPinEditOpen(false);
+        }}
       >
         {hoveredQueue.map(() => (
           <HoverEffect
@@ -117,7 +125,7 @@ function Map({
           <MarkerLogic
             marker={marker}
             hoveredMarker={hoveredMarker}
-            panTo={panTo}
+            // panTo={panTo}
             setHoveredMarker={setHoveredMarker}
             setSelectedMarker={setSelectedMarker}
             selectedMarker={selectedMarker}
@@ -138,6 +146,7 @@ function Map({
             setIsPinHoverEffectShown={setIsPinHoverEffectShown}
             isPinEditOpen={isPinEditOpen}
             setIsPinEditOpen={setIsPinEditOpen}
+            panTo={panTo}
           />
         )}
       </GoogleMap>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import styles from "./MapContainer.module.css"; // Import css modules stylesheet as styles
@@ -9,24 +9,22 @@ function HoverEffect({
   pixelPos,
   pin,
   hoveredMarker,
-  setIsPinShown,
   isPinDragging,
-  address,
   isPinHoverEffectShown,
   isPinEditOpen,
-  setIsPinEditOpen,
+  PinContent,
 }) {
-  // const [isPinEditOpen, setIsPinEditOpen] = useState(false)
-
   const displayPosition = () => {
     if (pin) {
       if (isPinEditOpen) {
+        console.log(window.innerWidth);
         return {
-          x: window.innerWidth / 2 + pixelPos.x - 100,
-          y: window.innerHeight / 2 + pixelPos.y - 200,
+          // x: window.innerWidth / 2,
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
           opacity: 1,
           width: "400px",
-          height: "500px",
+          height: "300px",
           transition: {
             ease: [0.16, 1, 0.3, 1],
             duration: 0.55,
@@ -37,6 +35,8 @@ function HoverEffect({
           x: window.innerWidth / 2 + pixelPos.x - 100,
           y: window.innerHeight / 2 + pixelPos.y - 200,
           opacity: 1,
+          width: "200px",
+          height: "150px",
           transition: {
             duration: 0,
           },
@@ -79,24 +79,7 @@ function HoverEffect({
             exit={"exit"}
           >
             <motion.div className={styles.hover__content}>
-              {pin && (
-                <div>
-                  <p>{address}</p>
-                  <div>
-                    <div className={styles.button}>
-                      <p onClick={() => setIsPinEditOpen(true)}>add marker</p>
-                    </div>
-                    <div
-                      className={styles.button}
-                      style={{ marginLeft: "5%", position: "relative" }}
-                    >
-                      <p onClick={() => setIsPinShown(false)}>remove pin</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* <p onClick={() => setSelectedMarker(null)}>closed</p> */}
+              {pin && <PinContent />}
             </motion.div>
           </motion.div>
         </motion.div>

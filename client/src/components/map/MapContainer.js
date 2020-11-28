@@ -26,10 +26,10 @@ function MapContainer() {
     }
   };
 
-  const mapRef = React.useRef();
-  const panTo = React.useCallback(({ lat, lng }) => {
-    mapRef.current.panTo({ lat, lng });
-  });
+  // const mapRef = React.useRef();
+  // const panTo = React.useCallback(({ lat, lng }) => {
+  //   mapRef.current.panTo({ lat, lng });
+  // });
 
   return (
     <div className={styles.container}>
@@ -48,13 +48,16 @@ function MapContainer() {
         <Map
           filteredMarkers={filteredMarkers}
           hoveredMarker={hoveredMarker}
-          mapRef={mapRef}
+          // mapRef={mapRef}
           markers={markers}
           setFilteredMarkers={setFilteredMarkers}
           setHoveredMarker={setHoveredMarker}
           setMarkers={setMarkers}
           setSelectedMarker={setSelectedMarker}
           selectedMarker={selectedMarker}
+          // panTo={panTo}
+
+          // isSidebarOpen={isSidebarOpen}
         />
       </motion.div>
     </div>

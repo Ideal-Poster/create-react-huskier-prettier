@@ -23,7 +23,6 @@ function Auth(props) {
 
   const onSubmit = async () => {
     const res = await login(form);
-    console.log(res.data);
     if (!res.errors) {
       localStorage.setItem("user", res.data.user);
       localStorage.setItem("token", res.data.token);

@@ -47,3 +47,12 @@
   background: #d45f61;
   cursor: pointer;
 }
+
+#edit__form__name {
+  width: 100%;
+}
+
+#edit__form__description {
+  width: 100%;
+  height: 100px;
+}
