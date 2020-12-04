@@ -14,6 +14,7 @@ import styles from "./MapContainer.module.css";
 const initialFormState = {
   name: "",
   description: "",
+  language: "",
 };
 
 function Map({
@@ -27,6 +28,7 @@ function Map({
   selectedMarker,
   markers,
   isSidebarOpen,
+  user,
 }) {
   const [isPinShown, setIsPinShown] = useState(false);
   const [pinPos, setPinPos] = useState({});
@@ -85,6 +87,10 @@ function Map({
     }
   };
 
+  const handleDropdownChange = (e) => {
+    console.log(e.target.value);
+  };
+
   const formValidation = () => {
     return markerForm.name.length > 5 && markerForm.description.length > 10;
   };
@@ -96,6 +102,7 @@ function Map({
       lat: pinPos.lat,
       lng: pinPos.lng,
     });
+
     console.log(res);
     if (!res.errors) {
       setMarkers((current) => {
@@ -109,7 +116,6 @@ function Map({
   };
 
   const onMapClick = React.useCallback((event) => {
-    console.log(mapRef.current.__gm.pixelBounds);
     if (event.pixel) {
       setPixelPos({
         x: -1 * (mapRef.current.__gm.pixelBounds.Pa - event.pixel.x),
@@ -271,6 +277,20 @@ function Map({
                       onChange={handleChange}
                     />
                     <br />
+
+                    <select
+                      name="language"
+                      id="language"
+                      value={markerForm.language}
+                      onChange={handleChange}
+                    >
+                      {user.languages.map((lang) => (
+                        <option value={lang.name}>{lang.name}</option>
+                      ))}
+                    </select>
+
+                    <br />
+
                     <button
                       disabled={!isMarkerFormValid}
                       type="submit"

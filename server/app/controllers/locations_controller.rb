@@ -22,7 +22,12 @@ class LocationsController < ApplicationController
     location = Location.new(location_params)
     if location.save && User.first
       Visit.create(user: User.first, location: location)
-      render json: { location: location }
+      render json: {location: location},
+      include: {
+        users: { only: :username },
+        languages: { only: :name }
+      },
+      methods: :my_location?
     else
       render json: { error: location.errors.full_messages }
     end

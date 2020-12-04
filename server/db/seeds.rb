@@ -56,6 +56,7 @@ chinese_locations = [
 40.times do 
   location = Location.create(
     name: Faker::Company.name,
+    description: Faker::TvShows::AquaTeenHungerForce.quote,
     lat: Random.new.rand(40.72148553795292..40.757970496596796),
     lng: (Random.new.rand(73.9317086773662..73.99999419042967) * -1)
   )

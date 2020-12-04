@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Marker } from "@react-google-maps/api";
 
 import HoverEffect from "./HoverEffect";
-import { getAddress, postLocation } from "../../requests";
+import { getAddress } from "../../requests";
 import styles from "./MapContainer.module.css"; // Import css modules stylesheet as styles
 
 function Pin({

@@ -4,11 +4,17 @@ import { motion } from "framer-motion";
 import "./Sidebar.css";
 import { getDashboard } from "../../requests";
 
-function Sidebar(props) {
-  const { isSidebarOpen, setIsSidebarOpen, filterMarkers, markers } = props;
-  const [user, setUser] = useState(null);
+function Sidebar({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  filterMarkers,
+  markers,
+  user,
+  setUser,
+}) {
   const fetchInfo = async () => {
     const res = await getDashboard();
+    console.log(res);
     setUser(res.data);
   };
   useEffect(() => {
@@ -22,7 +28,6 @@ function Sidebar(props) {
         variants={sidebarAnimation}
         initial="hidden"
         animate={isSidebarOpen ? "show" : "hidden"}
-        onAnimationComplete={() => console.log("hoop and holla")}
       >
         <motion.div
           variants={sidebarContentsAnimation}
