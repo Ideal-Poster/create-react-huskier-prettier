@@ -6,11 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
-
-# bob =  User.create(username: 'bob')
-# cheese = User.create(username: 'cheese')
-
-
+require "uri"
+require "net/http"
+require "json"
 
 chinese = Language.create(name: "Manderine")
 spanish = Language.create(name: "Spanish")
@@ -21,6 +19,19 @@ japanese = Language.create(name: "Japanese")
 languages = [chinese, spanish, tagalog, urdu, japanese]
 
 # create user
+
+def get_address(lat, lng)
+  url = URI("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{lat},#{lng}&key=#{ENV["GM_API_KEY"]}")
+
+  https = Net::HTTP.new(url.host, url.port)
+  https.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+  request["Content-Type"] = "application/json"
+
+  response = https.request(request)
+  JSON.parse(response.body)['results'][0]["formatted_address"]
+end
 
 user = User.create(username: Faker::Name.unique.name, password: '1Qqqqqqq', native_language: Language.find_by(name: "English"))
 UserLanguage.create(user: user, language: Language.all[0])
@@ -54,12 +65,17 @@ chinese_locations = [
 ]
 
 40.times do 
+  lat = Random.new.rand(40.72148553795292..40.757970496596796)
+  lng = (Random.new.rand(73.9317086773662..73.99999419042967) * -1)
+  
   location = Location.create(
+    address: "#{get_address(lat, lng)}",
     name: Faker::Company.name,
     description: Faker::TvShows::AquaTeenHungerForce.quote,
-    lat: Random.new.rand(40.72148553795292..40.757970496596796),
-    lng: (Random.new.rand(73.9317086773662..73.99999419042967) * -1)
+    lat: lat,
+    lng: lng
   )
+
   LanguageLocation.create(language: Language.all.sample, location: location)
   LanguageLocation.create(language: Language.all.sample, location: location)
 end
