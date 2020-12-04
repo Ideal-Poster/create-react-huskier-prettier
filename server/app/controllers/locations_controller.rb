@@ -12,7 +12,9 @@ class LocationsController < ApplicationController
     friends_locations.flatten!.uniq!
     render json: friends_locations,
     include: {
-      users: { only: :username },
+      users: { only: :username,
+        include: { languages: {only: :name} }
+      },
       languages: { only: :name }
     },
     methods: :my_location?
@@ -24,7 +26,9 @@ class LocationsController < ApplicationController
       Visit.create(user: User.first, location: location)
       render json: {location: location},
       include: {
-        users: { only: :username },
+        users: { only: :username,
+          include: { languages: {only: :name} }
+        },
         languages: { only: :name }
       },
       methods: :my_location?

@@ -53,3 +53,15 @@
   /* color: black; */
   padding-left: 40px;
 }
+
+.sidebar__language {
+  cursor: pointer;
+}
+
+.sidebar__language:hover {
+  color: grey;
+}
+
+.sidebar__language__selected {
+  color: grey;
+}

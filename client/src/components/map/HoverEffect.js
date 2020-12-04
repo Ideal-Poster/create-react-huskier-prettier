@@ -11,27 +11,11 @@ function HoverEffect({
   hoveredMarker,
   isPinDragging,
   isPinHoverEffectShown,
-  isPinEditOpen,
   PinContent,
   mapRef,
 }) {
   const displayPosition = () => {
     if (pin) {
-      // if (isPinEditOpen) {
-      //   console.log(window.innerWidth);
-      //   return {
-      //     // x: window.innerWidth / 2,
-      //     // x: mapRef.current.__gm.pixelBounds.Ia / 2,
-      //     // y: mapRef.current.__gm.pixelBounds.Ka / 2,
-      //     opacity: 1,
-      //     width: "400px",
-      //     height: "300px",
-      //     transition: {
-      //       ease: [0.16, 1, 0.3, 1],
-      //       duration: 0.55,
-      //     },
-      //   };
-      // } else {
       return {
         x: mapRef.current.__gm.pixelBounds.Ka * -1 + pixelPos.x - 100,
         y: window.innerHeight / 2 + pixelPos.y - 200,
@@ -45,8 +29,8 @@ function HoverEffect({
       // }
     } else {
       return {
-        x: mousePos.x - 100,
-        y: mousePos.y - 200,
+        x: mousePos.x - 150,
+        y: mousePos.y - 250,
         opacity: 1,
         transition: {
           duration: 0,
@@ -61,6 +45,23 @@ function HoverEffect({
     } else {
       return pin && !isPinDragging && isPinHoverEffectShown;
     }
+  };
+
+  const HoverContent = () => {
+    const { address, name, description } = hoveredMarker;
+
+    console.log(hoveredMarker);
+    return (
+      <div>
+        <p>{name}</p>
+        <p>{address}</p>
+        <p>
+          {description.length > 110
+            ? description.slice(0, 110) + "..."
+            : description}
+        </p>
+      </div>
+    );
   };
 
   return (
@@ -80,7 +81,7 @@ function HoverEffect({
             exit={"exit"}
           >
             <motion.div className={styles.hover__content}>
-              {pin && <PinContent />}
+              {pin ? <PinContent /> : <HoverContent />}
             </motion.div>
           </motion.div>
         </motion.div>

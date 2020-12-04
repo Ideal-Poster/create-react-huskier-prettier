@@ -106,7 +106,6 @@ function Pin({
         setPixelPos={setPixelPos}
         isPinDragging={isPinDragging}
         isPinHoverEffectShown={isPinHoverEffectShown}
-        isPinEditOpen={isPinEditOpen}
         PinContent={PinContent}
         mapRef={mapRef}
       />

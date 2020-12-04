@@ -26,13 +26,17 @@ function MapContainer() {
 
   const filterMarkers = (markers, category) => {
     if (markers) {
-      setFilteredMarkers(
-        markers.filter((marker) => {
-          return marker.languages.some(
-            (language) => language.name === category
-          );
-        })
-      );
+      if (category) {
+        setFilteredMarkers(
+          markers.filter((marker) => {
+            return marker.languages.some(
+              (language) => language.name === category
+            );
+          })
+        );
+      } else {
+        setFilteredMarkers(markers);
+      }
     }
   };
 

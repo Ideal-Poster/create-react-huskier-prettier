@@ -12,6 +12,8 @@ function Sidebar({
   user,
   setUser,
 }) {
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+
   const fetchInfo = async () => {
     const res = await getDashboard();
     console.log(res);
@@ -20,6 +22,16 @@ function Sidebar({
   useEffect(() => {
     fetchInfo();
   }, []);
+
+  useEffect(() => {
+    filterMarkers(markers, selectedLanguage);
+  }, [selectedLanguage]);
+
+  const languageOnClick = (language) => {
+    selectedLanguage === language.name
+      ? setSelectedLanguage(null)
+      : setSelectedLanguage(language.name);
+  };
 
   return (
     <div>
@@ -52,8 +64,14 @@ function Sidebar({
                 <ul>
                   {user.languages.map((language) => (
                     <li
+                      // style={{ color: selectedLanguage === language.name ? 'gray' : 'black'}}
+                      className={`sidebar__language ${
+                        selectedLanguage === language.name
+                          ? "sidebar__language__selected"
+                          : null
+                      }`}
                       key={`language-${language.name}`}
-                      onClick={() => filterMarkers(markers, language.name)}
+                      onClick={(e) => languageOnClick(language)}
                     >
                       {language.name}
                     </li>

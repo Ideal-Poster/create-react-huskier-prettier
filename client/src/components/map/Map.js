@@ -189,7 +189,6 @@ function Map({
           <MarkerLogic
             marker={marker}
             hoveredMarker={hoveredMarker}
-            // panTo={panTo}
             setHoveredMarker={setHoveredMarker}
             setSelectedMarker={setSelectedMarker}
             selectedMarker={selectedMarker}
