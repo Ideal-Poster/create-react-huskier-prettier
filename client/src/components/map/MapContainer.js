@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import styles from "./MapContainer.module.css"; // Import css modules stylesheet as styles
 import Map from "./Map";
 
-import HoverEffect from "./HoverEffect";
 import Sidebar from "./Sidebar";
 import { motion } from "framer-motion";
 
@@ -26,11 +25,6 @@ function MapContainer() {
     }
   };
 
-  // const mapRef = React.useRef();
-  // const panTo = React.useCallback(({ lat, lng }) => {
-  //   mapRef.current.panTo({ lat, lng });
-  // });
-
   return (
     <div className={styles.container}>
       <Sidebar
@@ -48,16 +42,13 @@ function MapContainer() {
         <Map
           filteredMarkers={filteredMarkers}
           hoveredMarker={hoveredMarker}
-          // mapRef={mapRef}
           markers={markers}
           setFilteredMarkers={setFilteredMarkers}
           setHoveredMarker={setHoveredMarker}
           setMarkers={setMarkers}
           setSelectedMarker={setSelectedMarker}
           selectedMarker={selectedMarker}
-          // panTo={panTo}
-
-          // isSidebarOpen={isSidebarOpen}
+          isSidebarOpen={isSidebarOpen}
         />
       </motion.div>
     </div>

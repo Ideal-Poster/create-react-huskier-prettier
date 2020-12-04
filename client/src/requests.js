@@ -100,3 +100,17 @@ export const getAddress = async (lat, lng) => {
     console.log(error);
   }
 };
+
+export const postLocation = async (form) => {
+  try {
+    const res = await api.post("/locations", form);
+    if (res.data.errors) {
+      console.log(res);
+      return res;
+    } else {
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

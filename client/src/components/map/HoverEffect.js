@@ -13,35 +13,36 @@ function HoverEffect({
   isPinHoverEffectShown,
   isPinEditOpen,
   PinContent,
+  mapRef,
 }) {
   const displayPosition = () => {
     if (pin) {
-      if (isPinEditOpen) {
-        console.log(window.innerWidth);
-        return {
-          // x: window.innerWidth / 2,
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-          opacity: 1,
-          width: "400px",
-          height: "300px",
-          transition: {
-            ease: [0.16, 1, 0.3, 1],
-            duration: 0.55,
-          },
-        };
-      } else {
-        return {
-          x: window.innerWidth / 2 + pixelPos.x - 100,
-          y: window.innerHeight / 2 + pixelPos.y - 200,
-          opacity: 1,
-          width: "200px",
-          height: "150px",
-          transition: {
-            duration: 0,
-          },
-        };
-      }
+      // if (isPinEditOpen) {
+      //   console.log(window.innerWidth);
+      //   return {
+      //     // x: window.innerWidth / 2,
+      //     // x: mapRef.current.__gm.pixelBounds.Ia / 2,
+      //     // y: mapRef.current.__gm.pixelBounds.Ka / 2,
+      //     opacity: 1,
+      //     width: "400px",
+      //     height: "300px",
+      //     transition: {
+      //       ease: [0.16, 1, 0.3, 1],
+      //       duration: 0.55,
+      //     },
+      //   };
+      // } else {
+      return {
+        x: mapRef.current.__gm.pixelBounds.Ka * -1 + pixelPos.x - 100,
+        y: window.innerHeight / 2 + pixelPos.y - 200,
+        opacity: 1,
+        width: "200px",
+        height: "150px",
+        transition: {
+          duration: 0,
+        },
+      };
+      // }
     } else {
       return {
         x: mousePos.x - 100,

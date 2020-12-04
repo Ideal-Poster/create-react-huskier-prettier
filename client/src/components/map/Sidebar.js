@@ -22,6 +22,7 @@ function Sidebar(props) {
         variants={sidebarAnimation}
         initial="hidden"
         animate={isSidebarOpen ? "show" : "hidden"}
+        onAnimationComplete={() => console.log("hoop and holla")}
       >
         <motion.div
           variants={sidebarContentsAnimation}

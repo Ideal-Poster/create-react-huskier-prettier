@@ -45,8 +45,6 @@ end
   User.all[num].pending_invitations[0].update(confirmed: true)
 end
 
-
-
 chinese_locations = [
   {lat: 40.72448553795292, lng: -73.99979419042967 },
   {lat: 40.734482035662616, lng: -73.9840383282451 },
