@@ -5,11 +5,9 @@ function MarkerLogic({
   marker,
   hoveredMarker,
   setHoveredMarker,
-  // panTo,
   setSelectedMarker,
   selectedMarker,
   setIsPinShown,
-  isPinShown,
   setAddress,
 }) {
   const isMarkerActive = () => hoveredMarker && hoveredMarker.id === marker.id;
@@ -28,6 +26,14 @@ function MarkerLogic({
       return "Asset-12.svg";
     }
   };
+  const onClick = () => {
+    // find better fix for this
+    setTimeout(() => {
+      setSelectedMarker(marker);
+    }, 100);
+    setAddress("");
+    setIsPinShown(false);
+  };
 
   return (
     <Marker
@@ -37,13 +43,8 @@ function MarkerLogic({
       }}
       key={`${marker.created_at}-${marker.id}`}
       position={{ lat: marker.lat, lng: marker.lng }}
-      onClick={() => {
-        setSelectedMarker(marker);
-        setAddress("");
-        setIsPinShown(false);
-      }}
+      onClick={onClick}
       onMouseOver={() => {
-        // if (!isPinShown)
         setHoveredMarker(marker);
       }}
       onMouseOut={() => {

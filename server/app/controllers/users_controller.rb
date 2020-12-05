@@ -9,14 +9,13 @@ class UsersController < ApplicationController
     end
   end
 
-
   def dashboard
     render json:
     User.first,
     include: {
       friends: {
         only: [:username, :native_language],
-        include: { locations: {only: :id} }
+        include: { locations: {only: :id} },
       },
       locations: {
         except: [:created_at, :updated_at]
@@ -25,8 +24,20 @@ class UsersController < ApplicationController
         only: [:id],
         include: :location
       },
-      languages: { only: [:name] }
-    }
+      languages: { only: [:name] },
+      
+    },
+    methods: :pending_invitations 
+  end
+
+  def invite_friend
+    search_result = User.find_by(username: params["friend"])
+    if search_result
+      User.first.send_invitation(search_result)
+      render json: {invited: true}
+    else
+      render json: {errors: "There is not user by that name"}
+    end
   end
 
   private

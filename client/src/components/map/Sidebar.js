@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import "./Sidebar.css";
-import { getDashboard } from "../../requests";
+import { getDashboard, inviteFriend } from "../../requests";
 
 function Sidebar({
   isSidebarOpen,
@@ -13,6 +13,7 @@ function Sidebar({
   setUser,
 }) {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [userSearch, setUserSearch] = useState("");
 
   const fetchInfo = async () => {
     const res = await getDashboard();
@@ -31,6 +32,27 @@ function Sidebar({
     selectedLanguage === language.name
       ? setSelectedLanguage(null)
       : setSelectedLanguage(language.name);
+  };
+
+  const onChange = (e) => {
+    setUserSearch(e.target.value);
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const res = await inviteFriend(userSearch);
+    console.log(res);
+    if (res.data.errors) {
+      setUserSearch(res.data.errors);
+      setTimeout(() => {
+        setUserSearch("");
+      }, 5000);
+    } else {
+      setUserSearch(res.data.errors);
+      setTimeout(() => {
+        setUserSearch("");
+      }, 5000);
+    }
   };
 
   return (
@@ -61,10 +83,10 @@ function Sidebar({
 
               <div>
                 <h1>Languages</h1>
+
                 <ul>
                   {user.languages.map((language) => (
                     <li
-                      // style={{ color: selectedLanguage === language.name ? 'gray' : 'black'}}
                       className={`sidebar__language ${
                         selectedLanguage === language.name
                           ? "sidebar__language__selected"
@@ -81,14 +103,27 @@ function Sidebar({
 
               <div>
                 <h1>Friends</h1>
-                <ul>
-                  {user.friends.map((friend) => (
-                    <li key={`username-${friend.username}`}>
-                      {" "}
-                      {friend.username}{" "}
-                    </li>
-                  ))}
-                </ul>
+                <div className="friends__list">
+                  <form
+                    onSubmit={onSubmit}
+                    style={{ paddingLeft: "40px", paddingBottom: "10px" }}
+                  >
+                    <input
+                      type="text"
+                      placeholder="add friend"
+                      value={userSearch}
+                      onChange={onChange}
+                    />
+                  </form>
+                  <ul>
+                    {user.friends.map((friend) => (
+                      <li key={`username-${friend.username}`}>
+                        {" "}
+                        {friend.username}{" "}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           )}

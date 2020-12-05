@@ -46,7 +46,7 @@
 }
 
 #sidebar__button:hover {
-  background: grey;
+  background: rgb(80, 0, 230);
 }
 
 .sidebar__container {
@@ -59,9 +59,17 @@
 }
 
 .sidebar__language:hover {
-  color: grey;
+  color: rgb(80, 0, 230);
 }
 
 .sidebar__language__selected {
-  color: grey;
+  color: rgb(80, 0, 230);
+}
+
+.friends__list {
+  padding-top: 15px;
+  height: 200px;
+  margin-right: 40px;
+  overflow-y: scroll;
+  border: 1px solid black;
 }

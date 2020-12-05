@@ -4,13 +4,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import Container from "react-bootstrap/Container";
 
 import { libraries, mapContainerStyle, center, options } from "./mapConfig";
-import { getLocations, postLocation } from "../../requests";
+import { getLocations, postLocation, visitLocation } from "../../requests";
 import MarkerLogic from "./MarkerLogic";
 import Pin from "./Pin";
 import HoverEffect from "./HoverEffect";
 
 import styles from "./MapContainer.module.css";
-
 const initialFormState = {
   name: "",
   description: "",
@@ -20,7 +19,6 @@ const initialFormState = {
 function Map({
   filteredMarkers,
   hoveredMarker,
-  // panTo,
   setFilteredMarkers,
   setHoveredMarker,
   setMarkers,
@@ -40,6 +38,7 @@ function Map({
   const [address, setAddress] = useState("");
   const [markerForm, setMarkerForm] = useState(initialFormState);
   const [isMarkerFormValid, setIsMarkerFormValid] = useState(false);
+  const [isFriendsPanelShown, setIsFriendsPanelShown] = useState(false);
 
   const mapRef = React.useRef();
   const panTo = React.useCallback(({ lat, lng }) => {
@@ -85,10 +84,6 @@ function Map({
         ? setIsMarkerFormValid(true)
         : setIsMarkerFormValid(false);
     }
-  };
-
-  const handleDropdownChange = (e) => {
-    console.log(e.target.value);
   };
 
   const formValidation = () => {
@@ -153,6 +148,23 @@ function Map({
     }
   };
 
+  const onClickvisitLocation = async () => {
+    const res = await visitLocation(selectedMarker);
+    console.log(res.data.marker);
+    if (!res.data.errors) {
+      setMarkers((current) => {
+        const updatedState = current.map((marker) => {
+          if (marker.id === res.data.marker.id) {
+            return { ...res.data.marker, "my_location?": true };
+          } else {
+            return marker;
+          }
+        });
+        return updatedState;
+      });
+    }
+  };
+
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
 
@@ -181,7 +193,7 @@ function Map({
             mousePos={mousePos}
             marker={hoveredMarker}
             selectedMarker={selectedMarker}
-            setSelectedMarker={setSelectedMarker}
+            // setSelectedMarker={setSelectedMarker}
             hoveredMarker={hoveredMarker}
           />
         ))}
@@ -249,8 +261,15 @@ function Map({
             >
               {selectedMarker.id ? (
                 <>
-                  <h2>{selectedMarker.name}</h2>
+                  <h1>{selectedMarker.name}</h1>
+                  <p>{selectedMarker.address}</p>
                   <h2>{selectedMarker.description}</h2>
+                  <button
+                    onClick={() => onClickvisitLocation(selectedMarker)}
+                    className={styles.visit__button}
+                  >
+                    Visit
+                  </button>
                 </>
               ) : (
                 <>

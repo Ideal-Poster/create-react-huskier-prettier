@@ -2,13 +2,13 @@ class User < ApplicationRecord
   validates :username, uniqueness: :true, presence: :true
   has_secure_password
 
-  has_many :user_languages
+  has_many :user_languages, :dependent => :delete_all
   has_many :languages, through: :user_languages
 
-  has_many :visits
+  has_many :visits, :dependent => :delete_all
   has_many :locations, through: :visits
   
-  has_many :invitations
+  has_many :invitations, :dependent => :delete_all
   has_many :pending_invitations, -> { where confirmed: false }, class_name: 'Invitation', foreign_key: "friend_id"
 
   def friends

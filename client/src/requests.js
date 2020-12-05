@@ -114,3 +114,29 @@ export const postLocation = async (form) => {
     console.log(error);
   }
 };
+
+export const inviteFriend = async (friendName) => {
+  try {
+    const res = await api.post("/friend", { friend: friendName });
+    if (res.data.errors) {
+      return res;
+    } else {
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const visitLocation = async ({ id }) => {
+  try {
+    const res = await api.post("/visits", { location: id });
+    if (res.data.errors) {
+      return res;
+    } else {
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

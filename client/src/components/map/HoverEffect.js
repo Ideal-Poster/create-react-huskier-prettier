@@ -29,7 +29,7 @@ function HoverEffect({
       // }
     } else {
       return {
-        x: mousePos.x - 150,
+        x: mousePos.x - 135,
         y: mousePos.y - 250,
         opacity: 1,
         transition: {
