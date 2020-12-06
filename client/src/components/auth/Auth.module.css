@@ -1,5 +1,5 @@
 .validation__box {
-  background: #eeb83c;
+  background: #fcd5d6;
   /* border-radius: 10px; */
   padding: 20px 5px 20px 5px;
   width: 100%;
@@ -25,10 +25,11 @@
   position: relative;
   top: 50vh;
 }
+
 .background {
   width: 100vw;
   height: 100vh;
-  background: #f4f4f4;
+  background: #fceacd;
   overflow-x: hidden;
 }
 
@@ -58,4 +59,11 @@
 .submit__button[disabled="disabled"],
 .submit__button:disabled {
   background: rgb(29, 29, 29);
+}
+
+.title__text {
+  padding-bottom: 30px;
+  text-align: center;
+  font-family: Dom Casual;
+  color: #e4463d;
 }

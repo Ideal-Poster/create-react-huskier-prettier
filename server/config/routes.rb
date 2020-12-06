@@ -9,7 +9,13 @@ Rails.application.routes.draw do
 
   post "/signup", to: "users#create"
   post "/login", to: "auth#login"
+  post "/friend", to: "users#invite_friend"
+  delete "/friend", to:  "users#delete_friend"
+  post "/friend/confirm", to: "users#confirm_friend"
+
 
   get "/auto_login", to: "auth#auto_login"
+  get "/friends/locations", to: "locations#friends"
+  get "/dashboard", to: "users#dashboard"
 
 end

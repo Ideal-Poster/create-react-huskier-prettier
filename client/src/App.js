@@ -11,7 +11,6 @@ import { autoLogin } from "./requests";
 function App() {
   useEffect(() => {
     autoLogin();
-    // .then(console.log);
   }, []);
 
   return (

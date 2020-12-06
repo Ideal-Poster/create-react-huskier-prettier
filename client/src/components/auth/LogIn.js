@@ -25,33 +25,35 @@ function Auth(props) {
 
   const onSubmit = async () => {
     const res = await login(form);
-
     if (!res.errors) {
       localStorage.setItem("token", res.data.token);
       props.history.push("/");
     }
+    props.history.push("/");
   };
 
   return (
     <div className={styles.background}>
-      <Row className={styles.form__container}>
-        <Col md={{ span: 4, offset: 4 }}>
+      <Row className={styles.sign__up}>
+        <Col md={{ span: 4, offset: 4 }} style={{ padding: "0px" }}>
+          <h1 className={styles.title__text}>LOCAL LANGUAGE</h1>
+
           <Form.Group className={styles.form__group}>
             {Object.keys(form).map((formName) => (
               <Row key={formName}>
                 <Form.Control
-                  type={formName === "password" ? "password" : "text"}
+                  type={formName === "username" ? "text" : "password"}
                   name={formName}
                   placeholder={formName}
                   value={form[formName]}
                   onChange={handleChange}
-                  className={styles.form}
+                  className={`${styles.form}  ${styles.formName}`}
                 />
               </Row>
             ))}
             <Row>
               <Button className={styles.submit__button} onClick={onSubmit}>
-                Submit
+                Login
               </Button>
             </Row>
           </Form.Group>

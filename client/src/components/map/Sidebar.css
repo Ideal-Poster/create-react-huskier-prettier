@@ -1,0 +1,86 @@
+#sidebar {
+  padding-top: 20px;
+  height: 100vh;
+  width: 33.3vw;
+  background: #fceacd;
+  position: fixed;
+  z-index: 4000;
+  overflow-y: scroll;
+  position: absolute;
+  /* -moz-box-shadow:     inset -22px 0px 36px -20px #414141; */
+  /* -webkit-box-shadow:  inset -22px 0px 36px -20px #414141; */
+  /* box-shadow:          inset -22px 0px 36px -20px #414141; */
+  /* color: #000000; */
+  /* color: #f06e55; */
+  color: black;
+}
+
+.sidebar__marker {
+  padding: 0px 20px 20px 20px;
+  height: 180px;
+  width: 100%;
+}
+
+.sidebar__marker__container {
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid white; */
+}
+
+.map__div {
+  background: pink;
+  height: 100vh;
+  width: 66.7vw;
+  float: right;
+}
+
+#sidebar__button {
+  position: absolute;
+  z-index: 3000;
+  height: 40px;
+  width: 35px;
+  border: 3px solid gray;
+  border-radius: 6px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+#sidebar__button:hover {
+  background: rgb(100, 44, 204);
+}
+
+.sidebar__container {
+  /* color: black; */
+  padding-left: 40px;
+}
+
+.sidebar__language {
+  cursor: pointer;
+}
+
+.sidebar__language:hover {
+  color: rgb(100, 44, 204);
+}
+
+.sidebar__language__selected {
+  color: rgb(100, 44, 204);
+}
+
+.friends__list {
+  padding-top: 15px;
+  height: 200px;
+  margin-right: 40px;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
+
+.minus,
+.plus {
+  float: right;
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.pending__friend {
+  color: rgb(100, 44, 204);
+}

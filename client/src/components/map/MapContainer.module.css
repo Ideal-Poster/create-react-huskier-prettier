@@ -2,33 +2,96 @@
   height: 100vh;
   width: 100vw;
   position: relative;
+  background: black;
+  z-index: 10000;
+  font-family: "Larsseit";
+  overflow: hidden;
 }
 
 .hover__position {
   position: absolute;
   overflow: hidden;
-  width: 200px;
-  height: 150px;
-  z-index: 1000;
-  /* left: -100%; */
-  /* width: 0; */
-  /* background: purple; */
+  width: 220px;
+  height: 160px;
+  /* height: auto; */
+  z-index: 100;
+  opacity: 0;
 }
 
 .hover__container {
-  /* width: 0; */
   width: 0;
   height: 100%;
-  background: green;
+  background: #fcd5d6;
+  transform-origin: right;
+  padding: 10px;
 }
 
 .hover__content {
-  /* overflow: hidden; */
   position: absolute;
-  width: 100%;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+}
+
+.select__div {
+  position: absolute;
+  background: #f1debd;
   height: 100%;
-  /* right: 0; */
-  /* transform-origin: left 0% 0px; */
-  /* transform: translateX(50%); */
-  /* background: rosybrown; */
+  z-index: 1000;
+  overflow-x: hidden;
+  transform-origin: right;
+}
+
+.select__div__background {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: palevioletred;
+  opacity: 0.5;
+  z-index: 10;
+}
+
+.button {
+  display: inline-block;
+  width: 45%;
+  height: 30px;
+  background: #d45f61;
+  cursor: pointer;
+}
+
+#edit__form__name {
+  width: 100%;
+}
+
+#edit__form__description {
+  width: 100%;
+  height: 100px;
+}
+
+.x__icon {
+  float: right;
+  cursor: pointer;
+  font-size: 40px;
+  padding-right: 5px;
+}
+
+.visit__button {
+  border: 1px solid black;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  height: 50px;
+  /* float: right; */
+  margin-top: 20px;
+  background: #d45f61;
+  cursor: pointer;
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.users {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 10px;
+  width: 180px;
+  display: inline-block;
+  background: #d45f61;
 }

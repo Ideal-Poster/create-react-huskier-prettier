@@ -11,7 +11,7 @@ class AuthController < ApplicationController
   end
 
   def auto_login
-    user = User.find_by(id: get_auth_header)
+    # user = User.find_by(id: get_auth_header)
 
     if session_user
       render json: session_user
