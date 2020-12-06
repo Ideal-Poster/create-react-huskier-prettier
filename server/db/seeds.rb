@@ -40,7 +40,7 @@ UserLanguage.create(user: user, language: Language.all[2])
 
 
 10.times do
-  user = User.create(username: Faker::Name.unique.name, password: '1Qqqqqqq', native_language: Language.all.sample)
+  user = User.create(username: Faker::Internet.username, password: '1Qqqqqqq', native_language: Language.all.sample)
   UserLanguage.create(user: user, language: Language.all.sample)
 end
 
@@ -70,7 +70,7 @@ chinese_locations = [
   
   location = Location.create(
     address: "#{get_address(lat, lng)}",
-    name: Faker::Company.name,
+    name: Faker::Restaurant.name,
     description: Faker::TvShows::AquaTeenHungerForce.quote,
     lat: lat,
     lng: lng

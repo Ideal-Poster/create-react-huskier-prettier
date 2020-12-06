@@ -235,9 +235,6 @@ function Map({
             isPinShown={isPinShown}
             isPinHoverEffectShown={isPinHoverEffectShown}
             setIsPinHoverEffectShown={setIsPinHoverEffectShown}
-            isPinEditOpen={isPinEditOpen}
-            setIsPinEditOpen={setIsPinEditOpen}
-            panTo={panTo}
             mapRef={mapRef}
             isSidebarOpen={isSidebarOpen}
             setSelectedMarker={setSelectedMarker}
@@ -280,7 +277,7 @@ function Map({
                   {selectedMarker.users.map((user) => (
                     <p className={styles.users}>{user.username}</p>
                   ))}
-                  <h2>{selectedMarker.description}</h2>
+                  <p style={{ width: "100%" }}>{selectedMarker.description}</p>
                   <button
                     onClick={() => onClickVisitLocation(selectedMarker)}
                     className={styles.visit__button}
@@ -291,9 +288,7 @@ function Map({
                 </>
               ) : (
                 <>
-                  <h1 style={{ width: "400px", background: "red" }}>
-                    {address}
-                  </h1>
+                  <h1 style={{ width: "400px" }}>{address}</h1>
                   <form>
                     <label>Name</label>
                     <br />
@@ -331,6 +326,7 @@ function Map({
                       disabled={!isMarkerFormValid}
                       type="submit"
                       onClick={onSubmit}
+                      className={styles.visit__button}
                     >
                       submit
                     </button>

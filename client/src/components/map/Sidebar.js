@@ -7,6 +7,7 @@ import {
   inviteFriend,
   deleteFriend,
   getLocations,
+  confirmFriend,
 } from "../../requests";
 
 function Sidebar({
@@ -66,6 +67,10 @@ function Sidebar({
     setUserSearch(e.target.value);
   };
 
+  const confirmFriendOnClick = async (user) => {
+    confirmFriend(user);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const res = await inviteFriend(userSearch);
@@ -100,19 +105,19 @@ function Sidebar({
           {user && (
             <div className="sidebar__container">
               <div>
-                <h1>{user.username}</h1>
+                <h2>{user.username}</h2>
                 <ul>
                   <li>visits {user.visits.length}</li>
                   <li>
                     last visit:{" "}
-                    {user.visits.sort((a, b) => b.id - a.id)[0].location.name}
+                    {user.visits.legnth > 0 &&
+                      user.visits.sort((a, b) => b.id - a.id)[0].location.name}
                   </li>
                 </ul>
               </div>
 
               <div>
-                <h1>Languages</h1>
-
+                <h2>Languages</h2>
                 <ul>
                   {user.languages.map((language) => (
                     <li
@@ -131,7 +136,7 @@ function Sidebar({
               </div>
 
               <div>
-                <h1>Friends</h1>
+                <h2>Friends</h2>
                 <div className="friends__list">
                   <form
                     onSubmit={onSubmit}
@@ -147,7 +152,15 @@ function Sidebar({
                   <ul>
                     {user.pending_friends.length > 0 &&
                       user.pending_friends.map((friend) => (
-                        <li key={friend.username}>{friend.username}</li>
+                        <li className="pending__friend" key={friend.username}>
+                          {friend.username}
+                          <span
+                            className="plus"
+                            onClick={() => confirmFriendOnClick(friend)}
+                          >
+                            ➕
+                          </span>
+                        </li>
                       ))}
                     {user.friends.map((friend) => (
                       <li key={`username-${friend.username}`}>

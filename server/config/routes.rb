@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post "/login", to: "auth#login"
   post "/friend", to: "users#invite_friend"
   delete "/friend", to:  "users#delete_friend"
+  post "/friend/confirm", to: "users#confirm_friend"
 
 
   get "/auto_login", to: "auth#auto_login"

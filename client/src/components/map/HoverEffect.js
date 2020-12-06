@@ -20,8 +20,8 @@ function HoverEffect({
         x: mapRef.current.__gm.pixelBounds.Ka * -1 + pixelPos.x - 100,
         y: window.innerHeight / 2 + pixelPos.y - 200,
         opacity: 1,
-        width: "200px",
-        height: "150px",
+        width: "210px",
+        height: "160px",
         transition: {
           duration: 0,
         },
@@ -29,8 +29,8 @@ function HoverEffect({
       // }
     } else {
       return {
-        x: mousePos.x - 135,
-        y: mousePos.y - 250,
+        x: mousePos.x - 100,
+        y: mousePos.y - 200,
         opacity: 1,
         transition: {
           duration: 0,
@@ -51,11 +51,11 @@ function HoverEffect({
     const { address, name, description } = hoveredMarker;
     return (
       <div>
-        <p>{name}</p>
-        <p>{address}</p>
-        <p>
+        <p style={{ paddingTop: "5px", marginTop: "-10px" }}>{name}</p>
+        <p style={{ marginTop: "-10px" }}>{address}</p>
+        <p style={{ marginTop: "-10px" }}>
           {description.length > 110
-            ? description.slice(0, 110) + "..."
+            ? description.slice(0, 50) + "..."
             : description}
         </p>
       </div>

@@ -155,3 +155,16 @@ export const deleteFriend = async (user) => {
     console.log(error);
   }
 };
+
+export const confirmFriend = async (user) => {
+  try {
+    const res = await api.post("/friend/confirm", { user: user });
+    if (res.data.errors) {
+      return res;
+    } else {
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

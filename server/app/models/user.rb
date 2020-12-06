@@ -13,10 +13,10 @@ class User < ApplicationRecord
 
   def pending_friends
     invitations =  Invitation.where(friend_id: id, confirmed: false)
-    invitations.map do |invite| 
+    users = invitations.map do |invite| 
       invite.user
     end
-    invitations
+    users
   end
 
   def friends

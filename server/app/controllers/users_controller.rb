@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   def dashboard
     render json:
-    User.first,
+    session_user,
     include: {
       friends: {
         only: [:username, :native_language],
@@ -33,17 +33,35 @@ class UsersController < ApplicationController
   def invite_friend
     search_result = User.find_by(username: params["friend"])
     if search_result
-      User.first.send_invitation(search_result)
+      session_user.send_invitation(search_result)
       render json: {invited: true}
     else
       render json: {errors: "User not found"}
     end
   end
 
+  def confirm_friend
+
+    invitation = session_user
+      .pending_invitations
+      .where(
+        user_id: user_params[:id],
+        friend_id: session_user,
+        comfirmed: false
+      )
+    if invitation
+      invitation.update(confirmed: true)
+      user = User.find(user_params[:id])
+      render json: user
+    else
+      render json: {errors: "somethign went wrong"}
+    end
+  end
+
 
   def delete_friend
     # byebug
-    deleted_user = User.first.remove_friend(User.find_by(username: params["user"]["username"]))
+    deleted_user = session_user.remove_friend(User.find_by(username: params["user"]["username"]))
     if deleted_user
       render json: deleted_user
     else 
@@ -54,6 +72,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:id, :username, :password)
+    params.require(:user).permit(:id, :username, :password, :native_language, :password_digest, :created_at, :updated_at)
   end
 end

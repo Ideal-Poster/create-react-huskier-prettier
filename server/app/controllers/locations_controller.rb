@@ -5,11 +5,13 @@ class LocationsController < ApplicationController
   # end
 
   def friends
-    friends_locations = User.first.friends.collect do |user|
+    friends_locations = session_user.friends.collect do |user|
       user.locations
     end.flatten
-    friends_locations << User.first.locations
+    friends_locations << session_user.locations
     friends_locations.flatten!.uniq!
+
+    # byebug
     render json: friends_locations,
     include: {
       users: { only: :username,
@@ -22,8 +24,8 @@ class LocationsController < ApplicationController
 
   def create
     location = Location.new(location_params)
-    if location.save && User.first
-      Visit.create(user: User.first, location: location)
+    if location.save && session_user
+      Visit.create(user: session_user, location: location)
       render json: {location: location},
       include: {
         users: { only: :username,

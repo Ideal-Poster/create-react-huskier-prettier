@@ -3,7 +3,7 @@ class VisitsController < ApplicationController
   def create
     # byebug
     location = Location.find(params["location"])
-    visit = Visit.new(user: User.first, location:location)
+    visit = Visit.new(user: session_user, location:location)
     if visit.save
       render json: { marker: location }
     else
