@@ -17,7 +17,6 @@ function MapContainer() {
 
   const fetchInfo = async () => {
     const res = await getDashboard();
-    console.log(res);
     setUser(res.data);
   };
   useEffect(() => {
@@ -49,6 +48,7 @@ function MapContainer() {
         markers={markers}
         user={user}
         setUser={setUser}
+        setMarkers={setMarkers}
       />
       <motion.div
         className="map__div"
@@ -67,6 +67,7 @@ function MapContainer() {
           selectedMarker={selectedMarker}
           isSidebarOpen={isSidebarOpen}
           user={user}
+          setUser={setUser}
         />
       </motion.div>
     </div>

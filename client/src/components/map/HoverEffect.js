@@ -49,8 +49,6 @@ function HoverEffect({
 
   const HoverContent = () => {
     const { address, name, description } = hoveredMarker;
-
-    console.log(hoveredMarker);
     return (
       <div>
         <p>{name}</p>

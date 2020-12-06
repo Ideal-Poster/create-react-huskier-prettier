@@ -27,6 +27,7 @@ function Map({
   markers,
   isSidebarOpen,
   user,
+  setUser,
 }) {
   const [isPinShown, setIsPinShown] = useState(false);
   const [pinPos, setPinPos] = useState({});
@@ -38,7 +39,7 @@ function Map({
   const [address, setAddress] = useState("");
   const [markerForm, setMarkerForm] = useState(initialFormState);
   const [isMarkerFormValid, setIsMarkerFormValid] = useState(false);
-  const [isFriendsPanelShown, setIsFriendsPanelShown] = useState(false);
+  const [visitButtonText, setVisitButtonText] = useState("Visit");
 
   const mapRef = React.useRef();
   const panTo = React.useCallback(({ lat, lng }) => {
@@ -69,9 +70,12 @@ function Map({
   }, [markers]);
 
   useEffect(() => {
-    console.log("eeeeee");
     setIsPinShown(false);
   }, [isSidebarOpen]);
+
+  useEffect(() => {
+    setVisitButtonText("Visit");
+  }, [selectedMarker]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -86,6 +90,10 @@ function Map({
     }
   };
 
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
   const formValidation = () => {
     return markerForm.name.length > 5 && markerForm.description.length > 10;
   };
@@ -98,7 +106,6 @@ function Map({
       lng: pinPos.lng,
     });
 
-    console.log(res);
     if (!res.errors) {
       setMarkers((current) => {
         const updatedState = [...current, res.data.location];
@@ -148,9 +155,9 @@ function Map({
     }
   };
 
-  const onClickvisitLocation = async () => {
+  const onClickVisitLocation = async () => {
     const res = await visitLocation(selectedMarker);
-    console.log(res.data.marker);
+
     if (!res.data.errors) {
       setMarkers((current) => {
         const updatedState = current.map((marker) => {
@@ -162,7 +169,14 @@ function Map({
         });
         return updatedState;
       });
+
+      setUser((current) => {
+        const updatedVisits = [...current.visits, res.data.marker];
+        current.visits = updatedVisits;
+        return current;
+      });
     }
+    setVisitButtonText("Visited!");
   };
 
   if (loadError) return "Error Loading Maps";
@@ -263,12 +277,16 @@ function Map({
                 <>
                   <h1>{selectedMarker.name}</h1>
                   <p>{selectedMarker.address}</p>
+                  {selectedMarker.users.map((user) => (
+                    <p className={styles.users}>{user.username}</p>
+                  ))}
                   <h2>{selectedMarker.description}</h2>
                   <button
-                    onClick={() => onClickvisitLocation(selectedMarker)}
+                    onClick={() => onClickVisitLocation(selectedMarker)}
                     className={styles.visit__button}
+                    disabled={visitButtonText === "Visited!" ? true : false}
                   >
-                    Visit
+                    {visitButtonText}
                   </button>
                 </>
               ) : (

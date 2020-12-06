@@ -174,7 +174,6 @@ function SignUp(props) {
   };
 
   const acceptLogin = (res) => {
-    // console.log(res);
     localStorage.setItem("user", res.user);
     localStorage.setItem("token", res.token);
     props.history.push("/");

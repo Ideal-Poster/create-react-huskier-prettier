@@ -33,7 +33,7 @@ def get_address(lat, lng)
   JSON.parse(response.body)['results'][0]["formatted_address"]
 end
 
-user = User.create(username: Faker::Name.unique.name, password: '1Qqqqqqq', native_language: Language.find_by(name: "English"))
+user = User.create(username: Faker::Internet.username, password: '1Qqqqqqq', native_language: Language.find_by(name: "English"))
 UserLanguage.create(user: user, language: Language.all[0])
 UserLanguage.create(user: user, language: Language.all[1])
 UserLanguage.create(user: user, language: Language.all[2])
@@ -51,9 +51,9 @@ end
 # User.first.send_invitation(User.all[5])
 
 5.times do |num|
-  user = User.find_by(id: num)
-  User.first.send_invitation(User.all[num])
-  User.all[num].pending_invitations[0].update(confirmed: true)
+  # user = User.find_by(id: num)
+  User.first.send_invitation(User.all[num+1])
+  User.all[num+1].pending_invitations[0].update(confirmed: true)
 end
 
 chinese_locations = [

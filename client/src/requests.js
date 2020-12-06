@@ -140,3 +140,18 @@ export const visitLocation = async ({ id }) => {
     console.log(error);
   }
 };
+
+export const deleteFriend = async (user) => {
+  try {
+    const res = await api.delete("/friend", {
+      data: { user: user },
+    });
+    if (res.data.errors) {
+      return res;
+    } else {
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

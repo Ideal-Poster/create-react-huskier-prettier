@@ -73,3 +73,9 @@
   overflow-y: scroll;
   border: 1px solid black;
 }
+
+.minus {
+  float: right;
+  padding-right: 20px;
+  cursor: pointer;
+}

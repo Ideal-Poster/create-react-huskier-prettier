@@ -27,7 +27,7 @@ class UsersController < ApplicationController
       languages: { only: [:name] },
       
     },
-    methods: :pending_invitations 
+    methods: :pending_friends
   end
 
   def invite_friend
@@ -36,13 +36,24 @@ class UsersController < ApplicationController
       User.first.send_invitation(search_result)
       render json: {invited: true}
     else
-      render json: {errors: "There is not user by that name"}
+      render json: {errors: "User not found"}
+    end
+  end
+
+
+  def delete_friend
+    # byebug
+    deleted_user = User.first.remove_friend(User.find_by(username: params["user"]["username"]))
+    if deleted_user
+      render json: deleted_user
+    else 
+      render json: {error: "user not found"}
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:username, :password)
+    params.require(:user).permit(:id, :username, :password)
   end
 end

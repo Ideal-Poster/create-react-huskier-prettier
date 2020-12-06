@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import "./Sidebar.css";
-import { getDashboard, inviteFriend } from "../../requests";
+import {
+  getDashboard,
+  inviteFriend,
+  deleteFriend,
+  getLocations,
+} from "../../requests";
 
 function Sidebar({
   isSidebarOpen,
@@ -11,13 +16,14 @@ function Sidebar({
   markers,
   user,
   setUser,
+  setMarkers,
 }) {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [userSearch, setUserSearch] = useState("");
+  const [searchPlacerholder, setsearchPlacerholder] = useState("Add Friend");
 
   const fetchInfo = async () => {
     const res = await getDashboard();
-    console.log(res);
     setUser(res.data);
   };
   useEffect(() => {
@@ -34,6 +40,28 @@ function Sidebar({
       : setSelectedLanguage(language.name);
   };
 
+  const updateUserFriends = async (user) => {
+    const deletedFriend = (await deleteFriend(user)).data;
+
+    setUser((current) => {
+      let updatedUser = current;
+      const updatedFriends = current.friends.filter(
+        (friend) => friend.username !== deletedFriend.username
+      );
+      console.log(updatedFriends);
+      updatedUser.friends = updatedFriends;
+      return updatedUser;
+    });
+  };
+
+  const deleteUserOnClick = async (user) => {
+    if (window.confirm("Are you sure?")) {
+      updateUserFriends(user);
+      const res = await getLocations();
+      setMarkers(res.data);
+    }
+  };
+
   const onChange = (e) => {
     setUserSearch(e.target.value);
   };
@@ -41,16 +69,17 @@ function Sidebar({
   const onSubmit = async (e) => {
     e.preventDefault();
     const res = await inviteFriend(userSearch);
-    console.log(res);
     if (res.data.errors) {
-      setUserSearch(res.data.errors);
+      setUserSearch("");
+      setsearchPlacerholder(res.data.errors);
       setTimeout(() => {
-        setUserSearch("");
+        setsearchPlacerholder("Add Friend");
       }, 5000);
     } else {
-      setUserSearch(res.data.errors);
+      setUserSearch("");
+      setsearchPlacerholder("Invite Sent");
       setTimeout(() => {
-        setUserSearch("");
+        setsearchPlacerholder("Add Friend");
       }, 5000);
     }
   };
@@ -110,16 +139,26 @@ function Sidebar({
                   >
                     <input
                       type="text"
-                      placeholder="add friend"
+                      placeholder={searchPlacerholder}
                       value={userSearch}
                       onChange={onChange}
                     />
                   </form>
                   <ul>
+                    {user.pending_friends.length > 0 &&
+                      user.pending_friends.map((friend) => (
+                        <li key={friend.username}>{friend.username}</li>
+                      ))}
                     {user.friends.map((friend) => (
                       <li key={`username-${friend.username}`}>
                         {" "}
                         {friend.username}{" "}
+                        <span
+                          className="minus"
+                          onClick={() => deleteUserOnClick(friend)}
+                        >
+                          ➖
+                        </span>
                       </li>
                     ))}
                   </ul>

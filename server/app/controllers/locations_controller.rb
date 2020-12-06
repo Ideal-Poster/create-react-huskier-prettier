@@ -27,7 +27,7 @@ class LocationsController < ApplicationController
       render json: {location: location},
       include: {
         users: { only: :username,
-          include: { languages: {only: :name} }
+          include: { languages: { only: :name } }
         },
         languages: { only: :name }
       },
